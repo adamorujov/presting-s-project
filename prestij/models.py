@@ -15,6 +15,8 @@ class SettingsModel(models.Model):
     success_page_active = models.BooleanField("Uğurlarımız", default=True)
     service_page_banner = models.ImageField("Xidmətlərimiz", upload_to="banner_images/", blank=True, null=True)
     service_page_active = models.BooleanField("Xidmətlərimiz", default=True)
+    news_page_banner = models.ImageField("Xəbərlər", upload_to="banner_images/", blank=True, null=True)
+    news_page_active = models.BooleanField("Xəbərlər", default=True)
     gallery_page_banner = models.ImageField("Qalereya", upload_to="banner_images/", blank=True, null=True)
     gallery_page_active = models.BooleanField("Qalereya", default=True)
     resume_page_banner = models.ImageField("CV göndər", upload_to="banner_images/", blank=True, null=True)
