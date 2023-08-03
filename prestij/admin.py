@@ -19,16 +19,18 @@ class SettingsAdmin(admin.ModelAdmin):
         ("ABOUT US", {'fields': ('about_us', 'about_active')}),
         ("SƏHİFƏ BANNERLƏRİ", {
             'fields': ('about_page_banner', 'success_page_banner', 
-            'service_page_banner', 'gallery_page_banner', 
-            'resume_page_banner', 'contact_page_banner', 
-            'edition_page_banner', 'register_page_banner')
+            'service_page_banner', 'news_page_banner',
+            'gallery_page_banner', 'resume_page_banner', 
+            'contact_page_banner', 'edition_page_banner', 
+            'register_page_banner')
             }
         ),
         ("SƏHİFƏ AKTİVLİYİ", {
             'fields': ('about_page_active', 'success_page_active', 
-            'service_page_active', 'gallery_page_active', 
-            'resume_page_active', 'contact_page_active', 
-            'edition_page_active', 'register_page_active')
+            'service_page_active', 'news_page_active',
+            'gallery_page_active', 'resume_page_active', 
+            'contact_page_active', 'edition_page_active', 
+            'register_page_active')
             }
         ),  
     )
