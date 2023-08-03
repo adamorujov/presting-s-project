@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from prestij.models import (
     SettingsModel, BannerModel, ContactInformationModel,
     SocialMediaModel, NewsModel, VideoGalleryModel,
@@ -48,6 +48,18 @@ class PhotoGalleryAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
     inlines = [PhotoGalleryItemAdmin]
 
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
+
 class BranchContactNumberAdmin(admin.TabularInline):
     model = BranchContactNumberModel
     extra = 3
@@ -57,6 +69,18 @@ class BranchContactNumberAdmin(admin.TabularInline):
 class BranchAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
     inlines = [BranchContactNumberAdmin]
+
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
 
 
 class SuccessItemAdmin(admin.TabularInline):
@@ -68,6 +92,18 @@ class SuccessItemAdmin(admin.TabularInline):
 class SuccessAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
     inlines = [SuccessItemAdmin]
+
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
 
 @admin.register(ResumeModel)
 class ResumeAdmin(admin.ModelAdmin):
@@ -171,29 +207,113 @@ class OnlineRegisterAdmin(admin.ModelAdmin):
 class BannerAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
 
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
+
 @admin.register(ContactInformationModel)
 class ContactInformationAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
+
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
 
 @admin.register(SocialMediaModel)
 class SocialMediaAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
 
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
+
 @admin.register(NewsModel)
 class NewsAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
+
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
 
 @admin.register(VideoGalleryModel)
 class VideoGalleryAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
 
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
+
 @admin.register(TeacherModel)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
 
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
+
 @admin.register(ServiceModel)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_active")
+
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
 
 
 def get_app_list(self, request):
