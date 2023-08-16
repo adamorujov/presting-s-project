@@ -4,7 +4,7 @@ from prestij.models import (
     SocialMediaModel, NewsModel, VideoGalleryModel,
     PhotoGalleryModel, PhotoGalleryItem, TeacherModel, ServiceModel,
     BranchModel, BranchContactNumberModel, SuccessModel,
-    SuccessItemModel, ResumeModel, ContactModel, OnlineRegister
+    SuccessItemModel, ResumeModel, ContactModel, OnlineRegister, EditionModel
 )
 from django.contrib.admin.sites import AdminSite
 
@@ -317,6 +317,22 @@ class ServiceAdmin(admin.ModelAdmin):
         updated = queryset.update(is_active=False)
         self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
 
+@admin.register(EditionModel)
+class EditionAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "is_active")
+
+    actions = ['get_activated', 'get_deactivated']
+
+    @admin.action(description="Aktiv et")
+    def get_activated(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, "Seçilmiş elementlər aktivləşdirildi.", messages.SUCCESS)
+
+    @admin.action(description="Deaktiv et")
+    def get_deactivated(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
+
 
 def get_app_list(self, request):
     app_dict = self._build_app_dict(request)
@@ -336,9 +352,10 @@ def get_app_list(self, request):
                 "Xəbərlər": 9,
                 "Foto Qalereya": 10,
                 "Video Qalereya": 11,
-                "CVlər": 12,
-                "Mesajlar": 13,
-                "Kursa onlayn qeydiyyatlar": 14,
+                "Nəşrlərimiz": 12,
+                "CVlər": 13,
+                "Mesajlar": 14,
+                "Kursa onlayn qeydiyyatlar": 15,
             }
             app['models'].sort(key=lambda x: ordering[x['name']])
 
