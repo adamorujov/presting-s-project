@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/account/', include('account.api.urls')),
     path('api/prestij/', include('prestij.api.urls')),
+    path('api/service/', include('service.api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
