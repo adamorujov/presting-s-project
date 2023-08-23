@@ -1,5 +1,4 @@
 from rest_framework.generics import ListAPIView
-from prestijproject.service.api.serializers import MasterForeignLanguageSerializer, MasterSubjectSerializer
 from service.models import (
     BranchModel, SeasonModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
