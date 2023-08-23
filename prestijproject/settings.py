@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'prestij',
     'account',
+    'service',
+    'accounting',
     'rest_framework',
     'ckeditor',
     'rest_framework_simplejwt',
