@@ -68,7 +68,7 @@ class AbiturientGroupSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class AbiturientSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     blocks = AbiturientBlockSerializer(many=True)
     abiturient_class = serializers.SlugRelatedField(queryset=AbiturientClassModel.objects.all(), slug_field="name")
     subjects = AbiturientSubjectSerializer(many=True)
@@ -94,7 +94,7 @@ class MasterGroupSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class MasterSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     language = serializers.SlugRelatedField(queryset=MasterForeignLanguageModel.objects.all(), slug_field="name")
     subjects = MasterSubjectSerializer(many=True)
     group = serializers.SlugRelatedField(queryset=MasterGroupModel.objects.all(), slug_field="name")
@@ -109,7 +109,7 @@ class MIQSubjectSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class MIQSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     subjects = MIQSubjectSerializer(many=True)
 
     class Meta:
@@ -122,7 +122,7 @@ class CivilServiceSubjectSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class CivilServiceSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     subjects = CivilServiceSubjectSerializer(many=True)
 
     class Meta:
@@ -130,7 +130,7 @@ class CivilServiceSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class ForeignLanguageSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     
     class Meta:
         model = ForeignLanguageModel
@@ -142,7 +142,7 @@ class ComputerProgramTypeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class ComputerCourseSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     program_types = ComputerProgramTypeSerializer(many=True)
 
     class Meta:
@@ -150,7 +150,7 @@ class ComputerCourseSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class AccountingSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
 
     class Meta:
         model = AccountingModel
@@ -172,7 +172,7 @@ class HighSchoolGroupSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class HighSchoolSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     highschool_class = serializers.SlugRelatedField(queryset=HighSchoolClassModel.objects.all(), slug_field="name")
     subjects = HighSchoolSubjectSerializer(many=True)
     group = serializers.SlugRelatedField(queryset=HighSchoolGroupModel.objects.all(), slug_field="name")
@@ -187,7 +187,7 @@ class PreSchoolSubjectSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class PreSchoolSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     subjects = PreSchoolSubjectSerializer(many=True)
 
     class Meta:
@@ -210,7 +210,7 @@ class PrimarySchoolGroupSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class PrimarySchoolSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(queryset=StudentModel.objects.all(), slug_field="get_full_name")
+    student = StudentSerializer()
     primaryschool_class = serializers.SlugRelatedField(queryset=PrimarySchoolClassModel.objects.all(), slug_field="name")
     subjects = PrimarySchoolSubjectSerializer(many=True)
     group = serializers.SlugRelatedField(queryset=PrimarySchoolGroupModel.objects.all(), slug_field="name")
