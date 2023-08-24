@@ -59,22 +59,22 @@ class AccountantListAPIView(ListAPIView):
     permission_classes = (IsAdminUser,)
 
 class AbiturientBlockListAPIView(ListAPIView):
-    queryset = AbiturientBlockModel
+    queryset = AbiturientBlockModel.objects.all()
     serializer_class = AbiturientBlockSerializer
     permission_classes = (IsAdminUser,)
 
 class AbiturientClassListAPIView(ListAPIView):
-    queryset = AbiturientClassModel
+    queryset = AbiturientClassModel.objects.all()
     serializer_class = AbiturientClassSerializer
     permission_classes = (IsAdminUser,)
 
 class AbiturientSubjectListAPIView(ListAPIView):
-    queryset = AbiturientSubjectModel
+    queryset = AbiturientSubjectModel.objects.all()
     serializer_class = AbiturientSubjectSerializer
     permission_classes = (IsAdminUser,)
 
 class AbiturientGroupListAPIView(ListAPIView):
-    queryset = AbiturientGroupModel
+    queryset = AbiturientGroupModel.objects.all()
     serializer_class = AbiturientGroupSerializer
     permission_classes = (IsAdminUser,)
 

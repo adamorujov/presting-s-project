@@ -334,38 +334,40 @@ class EditionAdmin(admin.ModelAdmin):
         self.message_user(request, "Seçilmiş elementlər deaktivləşdirildi.", messages.SUCCESS)
 
 
-def get_app_list(self, request):
-    app_dict = self._build_app_dict(request)
-    app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
+def get_app_list(self, request, app_label=None):
+        app_dict = self._build_app_dict(request)
+        app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
 
-    for app in app_list:
-        if app['app_label'] == 'prestij':
-            ordering = {
-                "Parametrlər": 1,
-                "Bannerlər": 2,
-                "Sosial media hesabları": 3,
-                "Əlaqə məlumatları": 4,
-                "Müəllimlər": 5,
-                "Filiallar": 6,
-                "Uğurlar": 7,
-                "Xidmətlər": 8,
-                "Xəbərlər": 9,
-                "Foto Qalereya": 10,
-                "Video Qalereya": 11,
-                "Nəşrlərimiz": 12,
-                "CVlər": 13,
-                "Mesajlar": 14,
-                "Kursa onlayn qeydiyyatlar": 15,
-            }
-            app['models'].sort(key=lambda x: ordering[x['name']])
+        for app in app_list:
+            if app['app_label'] == 'prestij':
+                ordering = {
+                    "Parametrlər": 1,
+                    "Bannerlər": 2,
+                    "Sosial media hesabları": 3,
+                    "Əlaqə məlumatları": 4,
+                    "Müəllimlər": 5,
+                    "Filiallar": 6,
+                    "Uğurlar": 7,
+                    "Xidmətlər": 8,
+                    "Xəbərlər": 9,
+                    "Foto Qalereya": 10,
+                    "Video Qalereya": 11,
+                    "Nəşrlərimiz": 12,
+                    "CVlər": 13,
+                    "Mesajlar": 14,
+                    "Kursa onlayn qeydiyyatlar": 15,
+                }
+                app['models'].sort(key=lambda x: ordering[x['name']])
 
-        if app['app_label'] == 'auth':
-            ordering = {
-                "Istifadəçilər" : 1,
-                "Qruplar" : 2,
-            }
-            app['models'].sort(key=lambda x: ordering[x['name']])
+            if app['app_label'] == 'auth':
+                ordering = {
+                    "Istifadəçilər" : 1,
+                }
+                app['models'].sort(key=lambda x: ordering[x['name']])
 
-    return app_list
+        return app_list
 
 admin.AdminSite.get_app_list = get_app_list
+# mysite = MyAdminSite()
+# admin.site = mysite
+# admin.sites.site = mysite
