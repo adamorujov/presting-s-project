@@ -85,6 +85,38 @@ class AbiturientListAPIView(ListAPIView):
     serializer_class = AbiturientSerializer
     permission_classes = (IsAdminUser,)
 
+class BlockAbiturientListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        block = AbiturientBlockModel.objects.get(id=id)
+        return AbiturientModel.objects.filter(blocks=block)
+    serializer_class = AbiturientSerializer
+    permission_classes = (IsAdminUser,)
+
+class ClassAbiturientListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        abiturient_class = AbiturientClassModel.objects.get(id=id)
+        return AbiturientModel.objects.filter(abiturient_class=abiturient_class)
+    serializer_class = AbiturientSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectAbiturientListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        subject = AbiturientSubjectModel.objects.get(id=id)
+        return AbiturientModel.objects.filter(subjects=subject)
+    serializer_class = AbiturientSerializer
+    permission_classes = (IsAdminUser,)
+
+class GroupAbiturientListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        group = AbiturientGroupModel.objects.get(id=id)
+        return AbiturientModel.objects.filter(group=group)
+    serializer_class = AbiturientSerializer
+    permission_classes = (IsAdminUser,)
+
 class MasterForeignLanguageListAPIView(ListAPIView):
     queryset = MasterForeignLanguageModel.objects.all()
     serializer_class = MasterForeignLanguageSerializer
@@ -107,6 +139,30 @@ class MasterListAPIView(ListAPIView):
     serializer_class = MasterSerializer
     permission_classes = (IsAdminUser,)
 
+class ForeignLanguageMasterListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        foreignlanguage = MasterForeignLanguageModel.objects.get(id=id)
+        return MasterModel.objects.filter(foreignlanguage=foreignlanguage)
+    serializer_class = MasterSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectMasterListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        subject = MasterSubjectModel.objects.get(id=id)
+        return MasterModel.objects.filter(subjects=subject)
+    serializer_class = MasterSerializer
+    permission_classes = (IsAdminUser,)
+
+class GroupMasterListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        group = MasterGroupModel.objects.get(id=id)
+        return MasterModel.objects.filter(group=group)
+    serializer_class = MasterSerializer
+    permission_classes = (IsAdminUser,)
+
 class MIQSubjectListAPIView(ListAPIView):
     queryset = MIQSubjectModel.objects.all()
     serializer_class = MIQSubjectSerializer
@@ -119,6 +175,14 @@ class MIQListAPIView(ListAPIView):
     serializer_class = MIQSerializer
     permission_classes = (IsAdminUser,)
 
+class SubjectMIQListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        subject = MIQSubjectModel.objects.get(id=id)
+        return MIQModel.objects.filter(subjects=subject)
+    serializer_class = MIQSerializer
+    permission_classes = (IsAdminUser,)
+
 class CivilServiceSubjectListAPIView(ListAPIView):
     queryset = CivilServiceSubjectModel.objects.all()
     serializer_class = CivilServiceSubjectSerializer
@@ -128,6 +192,14 @@ class CivilServiceListAPIView(ListAPIView):
     def get_queryset(self):
         id = self.kwargs.get("id")
         return CivilServiceModel.objects.filter(student__season_id=id)
+    serializer_class = CivilServiceSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectCivilServiceListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        subject = CivilServiceSubjectModel.objects.get(id=id)
+        return CivilServiceModel.objects.filter(subjects=subject)
     serializer_class = CivilServiceSerializer
     permission_classes = (IsAdminUser,)
 
@@ -147,6 +219,14 @@ class ComputerCourseListAPIView(ListAPIView):
     def get_queryset(self):
         id = self.kwargs.get("id")
         return ComputerCourseModel.objects.filter(student__season_id=id)
+    serializer_class = ComputerCourseSerializer
+    permission_classes = (IsAdminUser,)
+
+class ProgramTypeComputerCourseListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        program_type = ComputerProgramTypeModel.objects.get(id=id)
+        return ComputerCourseModel.objects.filter(program_type=program_type)
     serializer_class = ComputerCourseSerializer
     permission_classes = (IsAdminUser,)
 
@@ -179,6 +259,30 @@ class HighSchoolListAPIView(ListAPIView):
     serializer_class = HighSchoolSerializer
     permission_classes = (IsAdminUser,)
 
+class ClassHighSchoolListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        highschool_class = HighSchoolClassModel.objects.get(id=id)
+        return HighSchoolModel.objects.filter(highschool_class=highschool_class)
+    serializer_class = HighSchoolSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectHighSchoolListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        subject = HighSchoolSubjectModel.objects.get(id=id)
+        return HighSchoolModel.objects.filter(subjects=subject)
+    serializer_class = HighSchoolSerializer
+    permission_classes = (IsAdminUser,)
+
+class GroupHighSchoolListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        group = HighSchoolGroupModel.objects.get(id=id)
+        return HighSchoolModel.objects.filter(group=group)
+    serializer_class = HighSchoolSerializer
+    permission_classes = (IsAdminUser,)
+
 class PreSchoolSubjectListAPIView(ListAPIView):
     queryset = PreSchoolSubjectModel.objects.all()
     serializer_class = PreSchoolSubjectSerializer
@@ -188,6 +292,14 @@ class PreSchoolListAPIView(ListAPIView):
     def get_queryset(self):
         id = self.kwargs.get("id")
         return PreSchoolModel.objects.filter(student__season_id=id)
+    serializer_class = PreSchoolSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectPreSchoolListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        subject = PreSchoolSubjectModel.objects.get(id=id)
+        return PreSchoolModel.objects.filter(subjects=subject)
     serializer_class = PreSchoolSerializer
     permission_classes = (IsAdminUser,)
 
@@ -210,5 +322,29 @@ class PrimarySchoolListAPIView(ListAPIView):
     def get_queryset(self):
         id = self.kwargs.get("id")
         return PrimarySchoolModel.objects.filter(student__season_id=id)
+    serializer_class = PrimarySchoolSerializer
+    permission_classes = (IsAdminUser,)
+
+class ClassPrimarySchoolListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        primaryschool_class = PrimarySchoolClassModel.objects.get(id=id)
+        return PrimarySchoolModel.objects.filter(primaryschool_class=primaryschool_class)
+    serializer_class = PrimarySchoolSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectPrimarySchoolListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        subject = PrimarySchoolSubjectModel.objects.get(id=id)
+        return PrimarySchoolModel.objects.filter(subjects=subject)
+    serializer_class = PrimarySchoolSerializer
+    permission_classes = (IsAdminUser,)
+
+class GroupPrimarySchoolListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        group = PrimarySchoolGroupModel.objects.get(id=id)
+        return PrimarySchoolModel.objects.filter(group=group)
     serializer_class = PrimarySchoolSerializer
     permission_classes = (IsAdminUser,)
