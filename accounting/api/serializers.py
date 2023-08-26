@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from accounting.models import (
-    MonthModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
+    MonthModel, TeacherPaymentInformationModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
     MIQPaymentInformationModel, CivilServicePaymentInformationModel, ForeignLanguagePaymentInformationModel,
     ComputerCoursePaymentInformationModel, AccountingPaymentInformationModel,
     HighSchoolPaymentInformationModel, PreSchoolPaymentInformationModel,
     PrimarySchoolPaymentInformationModel
 )
 from service.api.serializers import (
-    SeasonSerializer, AbiturientSerializer, MasterSerializer, MIQSerializer,
+    SeasonSerializer, TeacherSerializer, AbiturientSerializer, MasterSerializer, MIQSerializer,
     ForeignLanguageSerializer, CivilServiceSerializer, ComputerCourseSerializer,
     AccountingSerializer, HighSchoolSerializer, PreSchoolSerializer,
     PrimarySchoolSerializer
@@ -18,6 +18,14 @@ class MonthSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MonthModel
+        fields = "__all__"
+
+class TeacherPaymentInformationSerializer(serializers.ModelSerializer):
+    teacher = TeacherSerializer()
+    month = MonthSerializer()
+
+    class Meta:
+        model = TeacherPaymentInformationModel
         fields = "__all__"
 
 class AbiturientPaymentInformationSerializer(serializers.ModelSerializer):

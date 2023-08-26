@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView
 from accounting.models import (
-    MonthModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
+    MonthModel, TeacherPaymentInformationModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
     MIQPaymentInformationModel, CivilServicePaymentInformationModel, ForeignLanguagePaymentInformationModel,
     ComputerCoursePaymentInformationModel, AccountingPaymentInformationModel,
     HighSchoolPaymentInformationModel, PreSchoolPaymentInformationModel,
@@ -8,7 +8,7 @@ from accounting.models import (
 )
 
 from accounting.api.serializers import (
-    MonthSerializer, AbiturientPaymentInformationSerializer, MasterPaymentInformationSerializer,
+    MonthSerializer, TeacherPaymentInformationSerializer, AbiturientPaymentInformationSerializer, MasterPaymentInformationSerializer,
     MIQPaymentInformationSerializer, ForeignLanguagePaymentInformationSerializer, 
     ComputerCoursePaymentInformationSerializer, CivilServicePaymentInformationSerializer,
     AccountingPaymentInformationSerializer, HighSchoolPaymentInformationSerializer,
@@ -24,6 +24,25 @@ class SeasonMonthListAPIView(ListAPIView):
         )
     serializer_class = MonthSerializer
     permission_classes = (IsAdminUser,)
+
+class TeacherMonthPaymentInformationListAPIView(ListAPIView):
+    def get_queryset(self):
+        month_id = self.kwargs["id"]
+        return TeacherPaymentInformationModel.objects.filter(
+            month_id=month_id
+        )
+    serializer_class = TeacherPaymentInformationSerializer
+    permission_classes = (IsAdminUser,) 
+
+class MonthTeacherPaymentInformationListAPIView(ListAPIView):
+    def get_queryset(self):
+        teacher_id = self.kwargs["id"]
+        return TeacherPaymentInformationModel.objects.filter(
+            teacher_id=teacher_id
+        )
+    serializer_class = TeacherPaymentInformationSerializer
+    permission_classes = (IsAdminUser,) 
+
 
 class AbiturientMonthPaymentInformationListAPIView(ListAPIView):
     def get_queryset(self):

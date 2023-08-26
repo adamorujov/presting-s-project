@@ -142,8 +142,8 @@ class MasterListAPIView(ListAPIView):
 class ForeignLanguageMasterListAPIView(ListAPIView):
     def get_queryset(self):
         id = self.kwargs.get("id")
-        foreignlanguage = MasterForeignLanguageModel.objects.get(id=id)
-        return MasterModel.objects.filter(foreignlanguage=foreignlanguage)
+        language = MasterForeignLanguageModel.objects.get(id=id)
+        return MasterModel.objects.filter(language=language)
     serializer_class = MasterSerializer
     permission_classes = (IsAdminUser,)
 
@@ -226,7 +226,7 @@ class ProgramTypeComputerCourseListAPIView(ListAPIView):
     def get_queryset(self):
         id = self.kwargs.get("id")
         program_type = ComputerProgramTypeModel.objects.get(id=id)
-        return ComputerCourseModel.objects.filter(program_type=program_type)
+        return ComputerCourseModel.objects.filter(program_types=program_type)
     serializer_class = ComputerCourseSerializer
     permission_classes = (IsAdminUser,)
 

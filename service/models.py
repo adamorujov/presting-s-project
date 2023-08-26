@@ -129,11 +129,12 @@ class AbiturientModel(models.Model):
         ("RU", "Rus dili"),
     )
     student = models.OneToOneField(StudentModel, verbose_name="Tələbə", on_delete=models.CASCADE, related_name="abiturient")
-    blocks = models.ManyToManyField(AbiturientBlockModel, verbose_name="Bloklar", related_name="block_abiturients")
-    abiturient_class = models.ForeignKey(AbiturientClassModel, verbose_name="Sinif", on_delete=models.CASCADE, related_name="class_abiturients")
-    subjects = models.ManyToManyField(AbiturientSubjectModel, verbose_name="Fənnlər", related_name="subject_abiturients")
-    group = models.ForeignKey(AbiturientGroupModel, verbose_name="Qrup", on_delete=models.CASCADE, related_name="group_abiturients")
+    blocks = models.ManyToManyField(AbiturientBlockModel, verbose_name="Bloklar", related_name="block_abiturients", blank=True, null=True)
+    abiturient_class = models.ForeignKey(AbiturientClassModel, verbose_name="Sinif", on_delete=models.CASCADE, related_name="class_abiturients", blank=True, null=True)
+    subjects = models.ManyToManyField(AbiturientSubjectModel, verbose_name="Fənnlər", related_name="subject_abiturients", blank=True, null=True)
+    group = models.ForeignKey(AbiturientGroupModel, verbose_name="Qrup", on_delete=models.CASCADE, related_name="group_abiturients", blank=True, null=True)
     dim_point = models.FloatField("DİM balı", blank=True, null=True)
+    sector = models.CharField("Bölmə", max_length=2, choices=SECTORS, default="AZ")
 
     class Meta:
         verbose_name = "Abituriyent"
@@ -366,9 +367,9 @@ class PrimarySchoolGroupModel(models.Model):
 
 class PrimarySchoolModel(models.Model):
     student = models.OneToOneField(StudentModel, verbose_name="Tələbə", on_delete=models.CASCADE, related_name="primaryschool")
-    primaryschool_class = models.ForeignKey(HighSchoolClassModel, verbose_name="Sinif", on_delete=models.CASCADE, related_name="class_primaryschools")
-    subjects = models.ManyToManyField(HighSchoolSubjectModel, verbose_name="Fənnlər", related_name="subject_primaryschools")
-    group = models.ForeignKey(HighSchoolGroupModel, verbose_name="Qrup", on_delete=models.CASCADE, related_name="group_primaryschools")
+    primaryschool_class = models.ForeignKey(PrimarySchoolClassModel, verbose_name="Sinif", on_delete=models.CASCADE, related_name="class_primaryschools")
+    subjects = models.ManyToManyField(PrimarySchoolSubjectModel, verbose_name="Fənnlər", related_name="subject_primaryschools")
+    group = models.ForeignKey(PrimarySchoolGroupModel, verbose_name="Qrup", on_delete=models.CASCADE, related_name="group_primaryschools")
 
     class Meta:
         verbose_name = "İbtidai"

@@ -3,6 +3,8 @@ from accounting.api import views
 
 urlpatterns = [
     path('season-month-list/<int:id>/', views.SeasonMonthListAPIView.as_view(), name="month-list"),
+    path('teacher-month-payment-list/<int:id>/', views.TeacherMonthPaymentInformationListAPIView.as_view(), name="teacher-month-payment-list"),
+    path('month-teacher-payment-list/<int:id>/', views.MonthTeacherPaymentInformationListAPIView.as_view(), name="month-teacher-payment-list"),
     path('abiturient-month-payment-list/<int:id>/', views.AbiturientMonthPaymentInformationListAPIView.as_view(), name="abiturient-month-payment-list"),
     path('month-abiturient-payment-list/<int:id>/', views.MonthAbiturientPaymentInformationListAPIView.as_view(), name="month-abiturient-payment-list"),
     path('master-month-payment-list/<int:id>/', views.MasterMonthPaymentInformationListAPIView.as_view(), name="master-month-payment-list"),
