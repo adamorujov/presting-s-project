@@ -28,7 +28,7 @@ class TeacherPaymentInformationModel(models.Model):
         verbose_name_plural = "Müəllim ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if TeacherPaymentInformationModel.objects.filter(
+        if not self.id and TeacherPaymentInformationModel.objects.filter(
             teacher = self.teacher,
             month = self.month
         ).exists():
@@ -52,7 +52,7 @@ class AbiturientPaymentInformationModel(models.Model):
         verbose_name_plural = "Abituriyent ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if AbiturientPaymentInformationModel.objects.filter(
+        if not self.id and AbiturientPaymentInformationModel.objects.filter(
             abiturient = self.abiturient,
             month = self.month
         ).exists():
@@ -71,11 +71,11 @@ class MasterPaymentInformationModel(models.Model):
     status = models.BooleanField("Ödənişin statusu", default=False)
 
     class Meta:
-        verbose_name = "Magistrant ödəniş məlumatı"
-        verbose_name_plural = "Magistrant ödəniş məlumatları"
+        verbose_name = "Magistraturaya hazırlıq ödəniş məlumatı"
+        verbose_name_plural = "Magistraturaya hazırlıq ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if MasterPaymentInformationModel.objects.filter(
+        if not self.id and MasterPaymentInformationModel.objects.filter(
             master = self.master,
             month = self.month
         ).exists():
@@ -98,7 +98,7 @@ class MIQPaymentInformationModel(models.Model):
         verbose_name_plural = "MİQ ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if MIQPaymentInformationModel.objects.filter(
+        if not self.id and MIQPaymentInformationModel.objects.filter(
             miq = self.miq,
             month = self.month
         ).exists():
@@ -121,7 +121,7 @@ class CivilServicePaymentInformationModel(models.Model):
         verbose_name_plural = "Dövlət qulluğu ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if CivilServicePaymentInformationModel.objects.filter(
+        if not self.id and CivilServicePaymentInformationModel.objects.filter(
             civilservice = self.civilservice,
             month = self.month
         ).exists():
@@ -144,7 +144,7 @@ class ForeignLanguagePaymentInformationModel(models.Model):
         verbose_name_plural = "Xarici dil ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if ForeignLanguagePaymentInformationModel.objects.filter(
+        if not self.id and ForeignLanguagePaymentInformationModel.objects.filter(
             foreignlanguage = self.foreignlanguage,
             month = self.month
         ).exists():
@@ -167,7 +167,7 @@ class ComputerCoursePaymentInformationModel(models.Model):
         verbose_name_plural = "Komputer kursu ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if ComputerCoursePaymentInformationModel.objects.filter(
+        if not self.id and ComputerCoursePaymentInformationModel.objects.filter(
             computercourse = self.computercourse,
             month = self.month
         ).exists():
@@ -190,7 +190,7 @@ class AccountingPaymentInformationModel(models.Model):
         verbose_name_plural = "Mühasibatlıq ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if AccountingPaymentInformationModel.objects.filter(
+        if not self.id and AccountingPaymentInformationModel.objects.filter(
             accounting = self.accounting,
             month = self.month
         ).exists():
@@ -213,7 +213,7 @@ class HighSchoolPaymentInformationModel(models.Model):
         verbose_name_plural = "Liseylərə hazırlıq ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if HighSchoolPaymentInformationModel.objects.filter(
+        if not self.id and HighSchoolPaymentInformationModel.objects.filter(
             highschool = self.highschool,
             month = self.month
         ).exists():
@@ -236,7 +236,7 @@ class PreSchoolPaymentInformationModel(models.Model):
         verbose_name_plural = "Məktəbəqədər hazırlıq ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if PreSchoolPaymentInformationModel.objects.filter(
+        if not self.id and PreSchoolPaymentInformationModel.objects.filter(
             preschool = self.preschool,
             month = self.month
         ).exists():
@@ -259,7 +259,7 @@ class PrimarySchoolPaymentInformationModel(models.Model):
         verbose_name_plural = "İbtidai ödəniş məlumatları"
 
     def save(self, *args, **kwargs):
-        if PrimarySchoolPaymentInformationModel.objects.filter(
+        if not self.id and PrimarySchoolPaymentInformationModel.objects.filter(
             primaryschool = self.primaryschool,
             month = self.month
         ).exists():

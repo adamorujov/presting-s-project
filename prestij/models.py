@@ -30,6 +30,10 @@ class SettingsModel(models.Model):
     register_page_banner = models.ImageField("Kursa onlayn qeydiyyat", upload_to="banner_images/", blank=True, null=True)
     register_page_active = models.BooleanField("Kursa onlayn qeydiyyat", default=True)
 
+    student_message1 = models.TextField("Ödəniş tarixinə 3 gün qalmış mesaj", blank=True, null=True)
+    student_message2 = models.TextField("Ödəniş tarixində mesaj", blank=True, null=True)
+    student_message3 = models.TextField("Ödəniş tarixindən 3 gün sonra mesaj", blank=True, null=True)
+
     class Meta:
         verbose_name = "Parametr"
         verbose_name_plural = "Parametrlər"

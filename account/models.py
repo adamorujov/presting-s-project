@@ -63,6 +63,7 @@ class UserManager(BaseUserManager):
 class Account(AbstractUser):
     username = None
     email = models.EmailField('Email', unique=True)
+    is_accountant = models.BooleanField('Mühasib', default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'rest_framework_simplejwt',
     'corsheaders',
+    'django_apscheduler'
 ]
 
 MIDDLEWARE = [
@@ -173,3 +174,4 @@ AUTH_USER_MODEL = "account.Account"
 # ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+

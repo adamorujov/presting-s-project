@@ -32,7 +32,11 @@ class SettingsAdmin(admin.ModelAdmin):
             'contact_page_active', 'edition_page_active', 
             'register_page_active')
             }
-        ),  
+        ),
+        ("MESAJLAR", {
+            'fields': ('student_message1', 'student_message2', 'student_message3')
+            }
+        ),   
     )
 
     def has_add_permission(self, request):
