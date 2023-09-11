@@ -24,16 +24,17 @@ class SeasonModel(models.Model):
         verbose_name_plural = "Sezonlar"
 
     def save(self, *args, **kwargs):
-        months = [
-            "Yanvar", "Fevral", "Mart", "Aprel", "May",
-            "Iyun", "Iyul", "Avqust", "Sentyabr", "Oktyabr",
-            "Noyabr", "Dekabr"
-            ]
-        for month in months:
-            accounting.models.MonthModel.objects.create(
-                name = month,
-                season = self
-            )
+        if self.id:
+            months = [
+                "Yanvar", "Fevral", "Mart", "Aprel", "May",
+                "Iyun", "Iyul", "Avqust", "Sentyabr", "Oktyabr",
+                "Noyabr", "Dekabr"
+                ]
+            for month in months:
+                accounting.models.MonthModel.objects.create(
+                    name = month,
+                    season = self
+                )
         return super(SeasonModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -91,23 +92,24 @@ class TeacherModel(models.Model):
         verbose_name_plural = "Müəllimlər"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(season=self.season)
-        for month in months:
-            if not accounting.models.TeacherPaymentInformationModel.objects.filter(
-                teacher=self,
-                month=month
-            ).exists():
-                accounting.models.TeacherPaymentInformationModel.objects.create(
-                    teacher = self,
-                    month = month,
-                    payment_date = self.payment_date,
-                    payment_amount = self.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.TeacherPaymentInformationModel.objects.get(teacher=self, month=month)
-                paymentinfo.payment_date = self.payment_date
-                paymentinfo.payment_amount = self.payment_amount
-                paymentinfo.save()
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(season=self.season)
+            for month in months:
+                if not accounting.models.TeacherPaymentInformationModel.objects.filter(
+                    teacher=self,
+                    month=month
+                ).exists():
+                    accounting.models.TeacherPaymentInformationModel.objects.create(
+                        teacher = self,
+                        month = month,
+                        payment_date = self.payment_date,
+                        payment_amount = self.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.TeacherPaymentInformationModel.objects.get(teacher=self, month=month)
+                    paymentinfo.payment_date = self.payment_date
+                    paymentinfo.payment_amount = self.payment_amount
+                    paymentinfo.save()
 
         return super(TeacherModel, self).save(*args, **kwargs)
 
@@ -189,25 +191,26 @@ class AbiturientModel(models.Model):
         verbose_name_plural = "Abituriyentlər"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.AbiturientPaymentInformationModel.objects.filter(
-                abiturient = self,
-                month = month
-            ).exists():
-                accounting.models.AbiturientPaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.AbiturientPaymentInformationModel.objects.filter(
                     abiturient = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.AbiturientPaymentInformationModel.objects.get(abiturient=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.AbiturientPaymentInformationModel.objects.create(
+                        abiturient = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.AbiturientPaymentInformationModel.objects.get(abiturient=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
 
         return super(AbiturientModel, self).save(*args, **kwargs)
 
@@ -256,25 +259,26 @@ class MasterModel(models.Model):
         verbose_name_plural = "Magistraturaya hazırlıqlar"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.MasterPaymentInformationModel.objects.filter(
-                master = self,
-                month = month
-            ).exists():
-                accounting.models.MasterPaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.MasterPaymentInformationModel.objects.filter(
                     master = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.MasterPaymentInformationModel.objects.get(master=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.MasterPaymentInformationModel.objects.create(
+                        master = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.MasterPaymentInformationModel.objects.get(master=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(MasterModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -300,25 +304,26 @@ class MIQModel(models.Model):
         verbose_name_plural = "MİQlər"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.MIQPaymentInformationModel.objects.filter(
-                miq = self,
-                month = month
-            ).exists():
-                accounting.models.MIQPaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.MIQPaymentInformationModel.objects.filter(
                     miq = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.MIQPaymentInformationModel.objects.get(miq=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.MIQPaymentInformationModel.objects.create(
+                        miq = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.MIQPaymentInformationModel.objects.get(miq=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
 
         return super(MIQModel, self).save(*args, **kwargs)
 
@@ -344,25 +349,26 @@ class CivilServiceModel(models.Model):
         verbose_name_plural = "Dövlət qulluqları"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.CivilServicePaymentInformationModel.objects.filter(
-                civilservice = self,
-                month = month
-            ).exists():
-                accounting.models.CivilServicePaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.CivilServicePaymentInformationModel.objects.filter(
                     civilservice = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.CivilServicePaymentInformationModel.objects.get(civilservice=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.CivilServicePaymentInformationModel.objects.create(
+                        civilservice = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.CivilServicePaymentInformationModel.objects.get(civilservice=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(CivilServiceModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -376,25 +382,26 @@ class ForeignLanguageModel(models.Model):
         verbose_name_plural = "Xarici dillər"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.ForeignLanguagePaymentInformationModel.objects.filter(
-                foreignlanguage = self,
-                month = month
-            ).exists():
-                accounting.models.ForeignLanguagePaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.ForeignLanguagePaymentInformationModel.objects.filter(
                     foreignlanguage = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.ForeignLanguagePaymentInformationModel.objects.get(foreignlanguage=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.ForeignLanguagePaymentInformationModel.objects.create(
+                        foreignlanguage = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.ForeignLanguagePaymentInformationModel.objects.get(foreignlanguage=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(ForeignLanguageModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -419,25 +426,26 @@ class ComputerCourseModel(models.Model):
         verbose_name_plural = "Komputer kursları"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.ComputerCoursePaymentInformationModel.objects.filter(
-                computercourse = self,
-                month = month
-            ).exists():
-                accounting.models.ComputerCoursePaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.ComputerCoursePaymentInformationModel.objects.filter(
                     computercourse = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.ComputerCoursePaymentInformationModel.objects.get(computercourse=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.ComputerCoursePaymentInformationModel.objects.create(
+                        computercourse = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.ComputerCoursePaymentInformationModel.objects.get(computercourse=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(ComputerCourseModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -451,25 +459,26 @@ class AccountingModel(models.Model):
         verbose_name_plural = "Mühasibatlıqlar"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.AccountingPaymentInformationModel.objects.filter(
-                accounting = self,
-                month = month
-            ).exists():
-                accounting.models.AccountingPaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.AccountingPaymentInformationModel.objects.filter(
                     accounting = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.AccountingPaymentInformationModel.objects.get(accounting=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.AccountingPaymentInformationModel.objects.create(
+                        accounting = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.AccountingPaymentInformationModel.objects.get(accounting=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(AccountingModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -516,25 +525,26 @@ class HighSchoolModel(models.Model):
         verbose_name_plural = "Liseylərə hazırlıqlar"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.HighSchoolPaymentInformationModel.objects.filter(
-                highschool = self,
-                month = month
-            ).exists():
-                accounting.models.HighSchoolPaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.HighSchoolPaymentInformationModel.objects.filter(
                     highschool = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.HighSchoolPaymentInformationModel.objects.get(highschool=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.HighSchoolPaymentInformationModel.objects.create(
+                        highschool = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.HighSchoolPaymentInformationModel.objects.get(highschool=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(HighSchoolModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -559,25 +569,26 @@ class PreSchoolModel(models.Model):
         verbose_name_plural = "Məktəbəqədər hazırlıqlar"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.PreSchoolPaymentInformationModel.objects.filter(
-                preschool = self,
-                month = month
-            ).exists():
-                accounting.models.PreSchoolPaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.PreSchoolPaymentInformationModel.objects.filter(
                     preschool = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.PreSchoolPaymentInformationModel.objects.get(preschool=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.PreSchoolPaymentInformationModel.objects.create(
+                        preschool = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.PreSchoolPaymentInformationModel.objects.get(preschool=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(PreSchoolModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -624,25 +635,26 @@ class PrimarySchoolModel(models.Model):
         verbose_name_plural = "İbtidailər"
 
     def save(self, *args, **kwargs):
-        months = accounting.models.MonthModel.objects.filter(
-            season = self.student.season
-        )
-        for month in months:
-            if not accounting.models.PrimarySchoolPaymentInformationModel.objects.filter(
-                primaryschool = self,
-                month = month
-            ).exists():
-                accounting.models.PrimarySchoolPaymentInformationModel.objects.create(
+        if self.id:
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.student.season
+            )
+            for month in months:
+                if not accounting.models.PrimarySchoolPaymentInformationModel.objects.filter(
                     primaryschool = self,
-                    month = month,
-                    payment_date = self.student.payment_date,
-                    payment_amount = self.student.payment_amount
-                )
-            else:
-                paymentinfo = accounting.models.PrimarySchoolPaymentInformationModel.objects.get(primaryschool=self, month=month)
-                paymentinfo.payment_date = self.student.payment_date
-                paymentinfo.payment_amount = self.student.payment_amount
-                paymentinfo.save()
+                    month = month
+                ).exists():
+                    accounting.models.PrimarySchoolPaymentInformationModel.objects.create(
+                        primaryschool = self,
+                        month = month,
+                        payment_date = self.student.payment_date,
+                        payment_amount = self.student.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.PrimarySchoolPaymentInformationModel.objects.get(primaryschool=self, month=month)
+                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_amount = self.student.payment_amount
+                    paymentinfo.save()
         return super(PrimarySchoolModel, self).save(*args, **kwargs)
 
     def __str__(self):
