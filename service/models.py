@@ -2,6 +2,7 @@ from django.db import models
 from account.models import Account
 from django.apps import apps
 import accounting
+from datetime import date
 
 class BranchModel(models.Model):
     name = models.CharField("Filial", max_length=300)
@@ -26,9 +27,9 @@ class SeasonModel(models.Model):
     def save(self, *args, **kwargs):
         if self.id:
             months = [
-                "Yanvar", "Fevral", "Mart", "Aprel", "May",
-                "Iyun", "Iyul", "Avqust", "Sentyabr", "Oktyabr",
-                "Noyabr", "Dekabr"
+                "Sentyabr", "Oktyabr", "Noyabr", "Dekabr", "Yanvar",
+                "Fevral", "Mart", "Aprel", "May", "Iyun",
+                "Iyul", "Avqust"
                 ]
             for month in months:
                 accounting.models.MonthModel.objects.create(
@@ -93,8 +94,19 @@ class TeacherModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.payment_date.year 
             months = accounting.models.MonthModel.objects.filter(season=self.season)
             for month in months:
+                day = self.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.TeacherPaymentInformationModel.objects.filter(
                     teacher=self,
                     month=month
@@ -102,12 +114,12 @@ class TeacherModel(models.Model):
                     accounting.models.TeacherPaymentInformationModel.objects.create(
                         teacher = self,
                         month = month,
-                        payment_date = self.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.TeacherPaymentInformationModel.objects.get(teacher=self, month=month)
-                    paymentinfo.payment_date = self.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.payment_amount
                     paymentinfo.save()
 
@@ -192,10 +204,21 @@ class AbiturientModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.AbiturientPaymentInformationModel.objects.filter(
                     abiturient = self,
                     month = month
@@ -203,12 +226,12 @@ class AbiturientModel(models.Model):
                     accounting.models.AbiturientPaymentInformationModel.objects.create(
                         abiturient = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.AbiturientPaymentInformationModel.objects.get(abiturient=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
 
@@ -260,10 +283,21 @@ class MasterModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.MasterPaymentInformationModel.objects.filter(
                     master = self,
                     month = month
@@ -271,12 +305,12 @@ class MasterModel(models.Model):
                     accounting.models.MasterPaymentInformationModel.objects.create(
                         master = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.MasterPaymentInformationModel.objects.get(master=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(MasterModel, self).save(*args, **kwargs)
@@ -305,10 +339,21 @@ class MIQModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.MIQPaymentInformationModel.objects.filter(
                     miq = self,
                     month = month
@@ -316,12 +361,12 @@ class MIQModel(models.Model):
                     accounting.models.MIQPaymentInformationModel.objects.create(
                         miq = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.MIQPaymentInformationModel.objects.get(miq=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
 
@@ -350,10 +395,21 @@ class CivilServiceModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year 
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
             for month in months:
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.CivilServicePaymentInformationModel.objects.filter(
                     civilservice = self,
                     month = month
@@ -361,12 +417,12 @@ class CivilServiceModel(models.Model):
                     accounting.models.CivilServicePaymentInformationModel.objects.create(
                         civilservice = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.CivilServicePaymentInformationModel.objects.get(civilservice=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(CivilServiceModel, self).save(*args, **kwargs)
@@ -383,10 +439,21 @@ class ForeignLanguageModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.ForeignLanguagePaymentInformationModel.objects.filter(
                     foreignlanguage = self,
                     month = month
@@ -394,12 +461,12 @@ class ForeignLanguageModel(models.Model):
                     accounting.models.ForeignLanguagePaymentInformationModel.objects.create(
                         foreignlanguage = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.ForeignLanguagePaymentInformationModel.objects.get(foreignlanguage=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(ForeignLanguageModel, self).save(*args, **kwargs)
@@ -427,10 +494,21 @@ class ComputerCourseModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.ComputerCoursePaymentInformationModel.objects.filter(
                     computercourse = self,
                     month = month
@@ -438,12 +516,12 @@ class ComputerCourseModel(models.Model):
                     accounting.models.ComputerCoursePaymentInformationModel.objects.create(
                         computercourse = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.ComputerCoursePaymentInformationModel.objects.get(computercourse=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(ComputerCourseModel, self).save(*args, **kwargs)
@@ -460,10 +538,21 @@ class AccountingModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.AccountingPaymentInformationModel.objects.filter(
                     accounting = self,
                     month = month
@@ -471,12 +560,12 @@ class AccountingModel(models.Model):
                     accounting.models.AccountingPaymentInformationModel.objects.create(
                         accounting = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.AccountingPaymentInformationModel.objects.get(accounting=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(AccountingModel, self).save(*args, **kwargs)
@@ -526,10 +615,21 @@ class HighSchoolModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.HighSchoolPaymentInformationModel.objects.filter(
                     highschool = self,
                     month = month
@@ -537,12 +637,12 @@ class HighSchoolModel(models.Model):
                     accounting.models.HighSchoolPaymentInformationModel.objects.create(
                         highschool = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.HighSchoolPaymentInformationModel.objects.get(highschool=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(HighSchoolModel, self).save(*args, **kwargs)
@@ -570,10 +670,21 @@ class PreSchoolModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.PreSchoolPaymentInformationModel.objects.filter(
                     preschool = self,
                     month = month
@@ -581,12 +692,12 @@ class PreSchoolModel(models.Model):
                     accounting.models.PreSchoolPaymentInformationModel.objects.create(
                         preschool = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.PreSchoolPaymentInformationModel.objects.get(preschool=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(PreSchoolModel, self).save(*args, **kwargs)
@@ -636,10 +747,21 @@ class PrimarySchoolModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id:
+            mon = 8
+            year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
                 season = self.student.season
             )
-            for month in months:
+            for month in months: 
+                day = self.student.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
                 if not accounting.models.PrimarySchoolPaymentInformationModel.objects.filter(
                     primaryschool = self,
                     month = month
@@ -647,12 +769,12 @@ class PrimarySchoolModel(models.Model):
                     accounting.models.PrimarySchoolPaymentInformationModel.objects.create(
                         primaryschool = self,
                         month = month,
-                        payment_date = self.student.payment_date,
+                        payment_date = date(year, mon, day),
                         payment_amount = self.student.payment_amount
                     )
                 else:
                     paymentinfo = accounting.models.PrimarySchoolPaymentInformationModel.objects.get(primaryschool=self, month=month)
-                    paymentinfo.payment_date = self.student.payment_date
+                    paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
         return super(PrimarySchoolModel, self).save(*args, **kwargs)
