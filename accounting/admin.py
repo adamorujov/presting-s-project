@@ -15,23 +15,23 @@ from django.contrib import messages
 class MonthAdmin(admin.ModelAdmin):
     list_display = ("__str__", "season")
 
-# @admin.register(TeacherPaymentInformationModel)
-# class TeacherPaymentInformationAdmin(admin.ModelAdmin):
-#     list_display = ("teacher", "month", "payment_date", "payment_amount", "status")
-#     list_filter = ("status", "payment_date")
-#     search_fields = ("teacher__first_name", "teacher__last_name")
+@admin.register(TeacherPaymentInformationModel)
+class TeacherPaymentInformationAdmin(admin.ModelAdmin):
+    list_display = ("teacher", "month", "payment_date", "payment_amount", "status")
+    list_filter = ("status", "payment_date")
+    search_fields = ("teacher__first_name", "teacher__last_name")
 
-#     actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false")
 
-#     @admin.action(description="Seçilmiş Müəllimlər ödəniş aldı.")
-#     def mark_as_true(self, request, queryset):
-#         updated = queryset.update(status=True)
-#         self.message_user(request, "Seçilmiş Müəllimlər ödəniş aldı.", messages.SUCCESS)
+    @admin.action(description="Seçilmiş Müəllimlər ödəniş aldı.")
+    def mark_as_true(self, request, queryset):
+        updated = queryset.update(status=True)
+        self.message_user(request, "Seçilmiş Müəllimlər ödəniş aldı.", messages.SUCCESS)
 
-#     @admin.action(description="Seçilmiş Müəllimlər ödəniş almayıb.")
-#     def mark_as_false(self, request, queryset):
-#         updated = queryset.update(status=False)
-#         self.message_user(request, "Seçilmiş Müəllimlər ödəniş almayıb.", messages.SUCCESS)
+    @admin.action(description="Seçilmiş Müəllimlər ödəniş almayıb.")
+    def mark_as_false(self, request, queryset):
+        updated = queryset.update(status=False)
+        self.message_user(request, "Seçilmiş Müəllimlər ödəniş almayıb.", messages.SUCCESS)
 
 
 @admin.register(AbiturientPaymentInformationModel)
