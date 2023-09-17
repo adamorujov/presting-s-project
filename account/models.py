@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import auth
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from service.models import AccountantModel
 
 class UserManager(BaseUserManager):
     use_in_migrations = True

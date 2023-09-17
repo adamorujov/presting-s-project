@@ -20,7 +20,10 @@ class AccountCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         account = Account.objects.create(
+            first_name = validated_data["first_name"]
+            last_name = validated_data["last_name"]
             email = validated_data["email"],
+            is_staff = validated_data["is_staff"]
             is_accountant = validated_data["is_accountant"]
         )
         account.set_password(validated_data["password"])
