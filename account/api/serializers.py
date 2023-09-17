@@ -12,7 +12,7 @@ class AccountCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('email', 'password')
+        fields = ('email', 'password', 'is_accountant')
 
     def validate(self, data):
         validate_password(data["password"])
@@ -21,6 +21,7 @@ class AccountCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         account = Account.objects.create(
             email = validated_data["email"],
+            is_accountant = validated_data["is_accountant"]
         )
         account.set_password(validated_data["password"])
         account.save()
