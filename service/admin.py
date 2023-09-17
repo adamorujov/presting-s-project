@@ -57,6 +57,29 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     search_fields = ("first_name", "last_name")
 
+    def get_queryset(self, request):
+        qs = super(StudentAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " tələbə silindi: "
+        for query in queryset:
+            content += query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(season__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
     actions = ("mark_as_de", "mark_as_d", "mark_as_b")
 
     @admin.action(description="Seçilmiş Tələbələri davam edir kimi göstər")

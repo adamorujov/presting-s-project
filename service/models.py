@@ -84,17 +84,21 @@ class StudentModel(models.Model):
         return self.first_name + " " + self.last_name
     
     def save(self, *args, **kwargs):
-        account = self.season.branch.branch_accountant.get().account
-        NotificationModel.objects.create(
-            content = account.first_name + " " + account.last_name + " yeni tələbə əlavə etdi: " + self.get_full_name,
-            type = "A"
-        )
+        if self.id:
+            NotificationModel.objects.create(
+                content = self.season.branch.name + " filialında bir tələbənin məlumatları yeniləndi: " + self.get_full_name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = self.season.branch.name + " filialına bir tələbə əlavə olundu: " + self.get_full_name,
+                type = "A"
+            )
         return super(StudentModel, self).save(*args, **kwargs)
     
     def delete(self, *args, **kwargs):
-        account = self.season.branch.branch_accountant.get().account
         NotificationModel.objects.create(
-            content = account.first_name + " " + account.last_name + " bir tələbə sildi: " + self.get_full_name,
+            content = self.season.branch.name + " filialından bir tələbə silindi: " + self.get_full_name,
             type = "D"
         )
         return super(StudentModel, self).delete(*args, **kwargs)

@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/prestij/', include('prestij.api.urls')),
     path('api/service/', include('service.api.urls')),
     path('api/accounting/', include('accounting.api.urls')),
+    path('api/notification/', include('notification.api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
