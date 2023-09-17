@@ -1,3 +1,4 @@
+from tkinter.messagebox import QUESTION
 from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
@@ -10,18 +11,22 @@ from accounting.models import (
     PrimarySchoolPaymentInformationModel
 )
 from django.contrib import messages
+import csv
+from django.http import HttpResponse
 
 @admin.register(MonthModel)
 class MonthAdmin(admin.ModelAdmin):
     list_display = ("__str__", "season")
+    
 
 @admin.register(TeacherPaymentInformationModel)
 class TeacherPaymentInformationAdmin(admin.ModelAdmin):
     list_display = ("teacher", "month", "payment_date", "payment_amount", "status")
     list_filter = ("status", "payment_date")
     search_fields = ("teacher__first_name", "teacher__last_name")
+    show_full_result_count = False
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Müəllimlər ödəniş aldı.")
     def mark_as_true(self, request, queryset):
@@ -33,6 +38,22 @@ class TeacherPaymentInformationAdmin(admin.ModelAdmin):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Müəllimlər ödəniş almayıb.", messages.SUCCESS)
 
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
 
 @admin.register(AbiturientPaymentInformationModel)
 class AbiturientPaymentInformationAdmin(admin.ModelAdmin):
@@ -40,7 +61,7 @@ class AbiturientPaymentInformationAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_date")
     search_fields = ("abiturient__student__first_name", "abiturient__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Abituriyentlər ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -52,13 +73,29 @@ class AbiturientPaymentInformationAdmin(admin.ModelAdmin):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Abituriyentlər ödəniş etməyib.", messages.SUCCESS)
 
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
 @admin.register(MasterPaymentInformationModel)
 class MasterPaymentInformationAdmin(admin.ModelAdmin):
     list_display = ("master", "month", "payment_date", "payment_amount", "status")
     list_filter = ("status", "payment_date")
     search_fields = ("master__student__first_name", "master__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Magistrantlar ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -69,6 +106,22 @@ class MasterPaymentInformationAdmin(admin.ModelAdmin):
     def mark_as_false(self, request, queryset):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Magistrantlar ödəniş etməyib.", messages.SUCCESS)
+    
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
 
 @admin.register(MIQPaymentInformationModel)
 class MIQPaymentInformationAdmin(admin.ModelAdmin):
@@ -76,7 +129,7 @@ class MIQPaymentInformationAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_date")
     search_fields = ("miq__student__first_name", "miq__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş MİQlər ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -87,6 +140,22 @@ class MIQPaymentInformationAdmin(admin.ModelAdmin):
     def mark_as_false(self, request, queryset):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş MİQlər ödəniş etməyib.", messages.SUCCESS)
+    
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
 
 @admin.register(CivilServicePaymentInformationModel)
 class CivilServicePaymentInformationAdmin(admin.ModelAdmin):
@@ -94,7 +163,7 @@ class CivilServicePaymentInformationAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_date")
     search_fields = ("civilservice__student__first_name", "civilservice__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Dövlət qulluqları ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -105,6 +174,22 @@ class CivilServicePaymentInformationAdmin(admin.ModelAdmin):
     def mark_as_false(self, request, queryset):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Dövlət qulluqları ödəniş etməyib.", messages.SUCCESS)
+
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
     
 @admin.register(ForeignLanguagePaymentInformationModel)
 class ForeignLanguagePaymentInformationAdmin(admin.ModelAdmin):
@@ -112,7 +197,7 @@ class ForeignLanguagePaymentInformationAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_date")
     search_fields = ("foreignlanguage__student__first_name", "foreignlanguage__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Xarici dillər ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -123,6 +208,22 @@ class ForeignLanguagePaymentInformationAdmin(admin.ModelAdmin):
     def mark_as_false(self, request, queryset):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Xarici dillər ödəniş etməyib.", messages.SUCCESS)
+    
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
 
 @admin.register(ComputerCoursePaymentInformationModel)
 class ComputerCoursePaymentInformationAdmin(admin.ModelAdmin):
@@ -130,7 +231,7 @@ class ComputerCoursePaymentInformationAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_date")
     search_fields = ("computercourse__student__first_name", "computercourse__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Kompüter kursları ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -142,13 +243,29 @@ class ComputerCoursePaymentInformationAdmin(admin.ModelAdmin):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Kompüter kursları ödəniş etməyib.", messages.SUCCESS)
 
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
 @admin.register(AccountingPaymentInformationModel)
 class AccountingPaymentInformationAdmin(admin.ModelAdmin):
     list_display = ("accounting", "month", "payment_date", "payment_amount", "status")
     list_filter = ("status", "payment_date")
     search_fields = ("accounting__student__first_name", "accounting__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Mühasibatlıqlar ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -160,6 +277,22 @@ class AccountingPaymentInformationAdmin(admin.ModelAdmin):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Mühasibatlıqlar ödəniş etməyib.", messages.SUCCESS)
 
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
 
 @admin.register(HighSchoolPaymentInformationModel)
 class HighSchoolPaymentInformationAdmin(admin.ModelAdmin):
@@ -167,7 +300,7 @@ class HighSchoolPaymentInformationAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_date")
     search_fields = ("highschool__student__first_name", "highschool__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Liseylərə hazırlıqlar ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -179,13 +312,29 @@ class HighSchoolPaymentInformationAdmin(admin.ModelAdmin):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Liseylərə hazırlıqlar ödəniş etməyib.", messages.SUCCESS)
 
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
 @admin.register(PreSchoolPaymentInformationModel)
 class PreSchoolPaymentInformationAdmin(admin.ModelAdmin):
     list_display = ("preschool", "month", "payment_date", "payment_amount", "status")
     list_filter = ("status", "payment_date")
     search_fields = ("preschool__student__first_name", "preschool__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş Məktəbəqədər hazırlıqlar ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -197,13 +346,29 @@ class PreSchoolPaymentInformationAdmin(admin.ModelAdmin):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş Məktəbəqədər hazırlıqlar ödəniş etməyib.", messages.SUCCESS)
 
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
 @admin.register(PrimarySchoolPaymentInformationModel)
 class PrimarySchoolPaymentInformationAdmin(admin.ModelAdmin):
     list_display = ("primaryschool", "month", "payment_date", "payment_amount", "status")
     list_filter = ("status", "payment_date")
     search_fields = ("primaryschool__student__first_name", "highschool__student__last_name")
 
-    actions = ("mark_as_true", "mark_as_false")
+    actions = ("mark_as_true", "mark_as_false", "export_as_csv")
 
     @admin.action(description="Seçilmiş İbtidailər ödəniş etdi.")
     def mark_as_true(self, request, queryset):
@@ -214,3 +379,19 @@ class PrimarySchoolPaymentInformationAdmin(admin.ModelAdmin):
     def mark_as_false(self, request, queryset):
         updated = queryset.update(status=False)
         self.message_user(request, "Seçilmiş İbtidailər ödəniş etməyib.", messages.SUCCESS)
+
+    @admin.action(description="CSV kimi ixrac edin")
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response

@@ -93,7 +93,7 @@ class TeacherModel(models.Model):
         verbose_name_plural = "Müəllimlər"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.payment_date:
             mon = 8
             year = self.payment_date.year 
             months = accounting.models.MonthModel.objects.filter(season=self.season)
@@ -203,7 +203,7 @@ class AbiturientModel(models.Model):
         verbose_name_plural = "Abituriyentlər"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -282,7 +282,7 @@ class MasterModel(models.Model):
         verbose_name_plural = "Magistraturaya hazırlıqlar"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -338,7 +338,7 @@ class MIQModel(models.Model):
         verbose_name_plural = "MİQlər"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -394,7 +394,7 @@ class CivilServiceModel(models.Model):
         verbose_name_plural = "Dövlət qulluqları"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year 
             months = accounting.models.MonthModel.objects.filter(
@@ -438,7 +438,7 @@ class ForeignLanguageModel(models.Model):
         verbose_name_plural = "Xarici dillər"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -493,7 +493,7 @@ class ComputerCourseModel(models.Model):
         verbose_name_plural = "Komputer kursları"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -537,7 +537,7 @@ class AccountingModel(models.Model):
         verbose_name_plural = "Mühasibatlıqlar"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -614,7 +614,7 @@ class HighSchoolModel(models.Model):
         verbose_name_plural = "Liseylərə hazırlıqlar"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -669,7 +669,7 @@ class PreSchoolModel(models.Model):
         verbose_name_plural = "Məktəbəqədər hazırlıqlar"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(
@@ -746,7 +746,7 @@ class PrimarySchoolModel(models.Model):
         verbose_name_plural = "İbtidailər"
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.student.payment_date:
             mon = 8
             year = self.student.payment_date.year
             months = accounting.models.MonthModel.objects.filter(

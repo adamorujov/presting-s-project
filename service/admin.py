@@ -50,7 +50,7 @@ class StudentAdmin(admin.ModelAdmin):
 
 class TeacherPaymentInformationAdmin(admin.TabularInline):
     model = TeacherPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(TeacherModel)
 class TeacherAdmin(admin.ModelAdmin):
@@ -88,12 +88,13 @@ admin.site.register(AbiturientGroupModel)
 
 class AbiturientPaymentInformationAdmin(admin.TabularInline):
     model = AbiturientPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(AbiturientModel)
 class AbiturientAdmin(admin.ModelAdmin):
     list_display = ("__str__", "sector", "dim_point")
     list_filter = ("sector", )
+    filter_horizontal = ('subjects', 'blocks')
 
     inlines = [AbiturientPaymentInformationAdmin]
     actions = ("mark_as_az", "mark_as_ru")
@@ -116,38 +117,41 @@ admin.site.register(MasterGroupModel)
 
 class MasterPaymentInformationAdmin(admin.TabularInline):
     model = MasterPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(MasterModel)
 class MasterAdmin(admin.ModelAdmin):
     list_display = ("__str__", "dim_point")
+    filter_horizontal = ("subjects",)
     inlines = [MasterPaymentInformationAdmin]
 
 admin.site.register(MIQSubjectModel)
 
 class MIQPaymentInformationAdmin(admin.TabularInline):
     model = MIQPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(MIQModel)
 class MIQAdmin(admin.ModelAdmin):
     list_display = ("__str__", "specialty")
+    filter_horizontal = ("subjects",)
     inlines = [MIQPaymentInformationAdmin]
 
 admin.site.register(CivilServiceSubjectModel)
 
 class CivilServicePaymentInformationAdmin(admin.TabularInline):
     model = CivilServicePaymentInformationModel
-    extra = 3
+    extra = 0
 
 
 @admin.register(CivilServiceModel)
 class CivilServiceAdmin(admin.ModelAdmin):
+    filter_horizontal = ("subjects",)
     inlines = [CivilServicePaymentInformationAdmin]
 
 class ForeignLanguagePaymentInformationAdmin(admin.TabularInline):
     model = ForeignLanguagePaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(ForeignLanguageModel)
 class ForeignLanguageAdmin(admin.ModelAdmin):
@@ -158,15 +162,16 @@ admin.site.register(ComputerProgramTypeModel)
 
 class ComputerCoursePaymentInformationAdmin(admin.TabularInline):
     model = ComputerCoursePaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(ComputerCourseModel)
 class ComputerCourseAdmin(admin.ModelAdmin):
+    filter_horizontal = ("program_types",)
     inlines = [ComputerCoursePaymentInformationAdmin]
 
 class AccountingPaymentInformationAdmin(admin.TabularInline):
     model = AccountingPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(AccountingModel)
 class AccountingAdmin(admin.ModelAdmin):
@@ -179,20 +184,22 @@ admin.site.register(HighSchoolGroupModel)
 
 class HighSchoolPaymentInformationAdmin(admin.TabularInline):
     model = HighSchoolPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(HighSchoolModel)
 class HighSchoolAdmin(admin.ModelAdmin):
+    filter_horizontal = ("subjects",)
     inlines = [HighSchoolPaymentInformationAdmin]
 
 admin.site.register(PreSchoolSubjectModel)
 
 class PreSchoolPaymentInformationAdmin(admin.TabularInline):
     model = PreSchoolPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(PreSchoolModel)
 class PreSchoolAdmin(admin.ModelAdmin):
+    filter_horizontal = ("subjects", )
     inlines = [PreSchoolPaymentInformationAdmin]
 
 admin.site.register(PrimarySchoolClassModel)
@@ -201,8 +208,9 @@ admin.site.register(PrimarySchoolGroupModel)
 
 class PrimarySchoolPaymentInformationAdmin(admin.TabularInline):
     model = PrimarySchoolPaymentInformationModel
-    extra = 3
+    extra = 0
 
 @admin.register(PrimarySchoolModel)
 class PrimarySchoolAdmin(admin.ModelAdmin):
+    filter_horizontal = ("subjects",)
     inlines = [PrimarySchoolPaymentInformationAdmin]

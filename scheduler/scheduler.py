@@ -47,7 +47,7 @@ def start():
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
     # run this job every 24 hours
-    scheduler.add_job(deactivate_expired_accounts, 'interval', hours=0.02, name='clean_accounts', jobstore='default')
+    scheduler.add_job(deactivate_expired_accounts, 'interval', hours=1, name='clean_accounts', jobstore='default')
     register_events(scheduler)
     scheduler.start()
     print("Scheduler started...", file=sys.stdout)

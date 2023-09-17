@@ -26,9 +26,19 @@ from service.api.serializers import (
     PrimarySchoolSerializer
 )
 from rest_framework.permissions import IsAdminUser
+from account.models import Account
+from django.shortcuts import get_object_or_404
 
 class BranchListAPIView(ListAPIView):
-    queryset = BranchModel.objects.all()
+    def get_queryset(self):
+        email = self.kwargs.get("email")
+        account = get_object_or_404(Account, email=email)
+        if account.is_superuser:
+            return BranchModel.objects.all()
+        else:
+            return BranchModel.objects.filter(
+                branch_accountant__account__email=email
+            )
     serializer_class = BranchSerializer
     permission_classes = (IsAdminUser,)
 

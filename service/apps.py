@@ -6,6 +6,6 @@ class ServiceConfig(AppConfig):
     name = 'service'
     verbose_name = "Xidmətlər"
 
-    def ready(self) -> None:
-        from scheduler import scheduler
-        scheduler.start()
+    # def ready(self) -> None:
+    #     from scheduler import scheduler
+    #     scheduler.start()
