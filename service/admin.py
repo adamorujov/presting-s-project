@@ -1,4 +1,7 @@
+from typing import Any
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 from service.models import (
     BranchModel, SeasonModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
@@ -18,12 +21,35 @@ from accounting.models import (
     PreSchoolPaymentInformationModel, PrimarySchoolPaymentInformationModel
 )
 from django.contrib import messages
+from notification.models import NotificationModel
 
 admin.site.register(BranchModel)
 
 @admin.register(SeasonModel)
 class SeasonAdmin(admin.ModelAdmin):
     list_display = ("__str__", "branch", "start_date", "end_date")
+
+    def get_queryset(self, request):
+        qs = super(SeasonAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " sezon silindi: "
+        for query in queryset:
+            content += query.name + " " + query.branch.name + " filialı, "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'branch' and not request.user.is_superuser:
+            kwargs["queryset"] = BranchModel.objects.filter(branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 @admin.register(StudentModel)
 class StudentAdmin(admin.ModelAdmin):

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'account',
     'service',
     'accounting',
+    'notification',
     'rest_framework',
     'ckeditor',
     'rest_framework_simplejwt',

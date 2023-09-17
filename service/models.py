@@ -1,8 +1,10 @@
+from typing import Any
 from django.db import models
 from account.models import Account
 from django.apps import apps
 import accounting
 from datetime import date
+from notification.models import NotificationModel
 
 class BranchModel(models.Model):
     name = models.CharField("Filial", max_length=300)
@@ -36,7 +38,22 @@ class SeasonModel(models.Model):
                     name = month,
                     season = self
                 )
+            NotificationModel.objects.create(
+                content = self.branch.name + " filialında bir sezona düzəliş edildi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = self.branch.name + " filialına yeni sezon əlavə olundu: " + self.name,
+                type = "A"
+            )
         return super(SeasonModel, self).save(*args, **kwargs)
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = self.branch.name + " filialından bir sezon silindi: " + self.name,
+            type = "D"
+        )
+        return super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -65,6 +82,22 @@ class StudentModel(models.Model):
     @property
     def get_full_name(self):
         return self.first_name + " " + self.last_name
+    
+    def save(self, *args, **kwargs):
+        account = self.season.branch.branch_accountant.get().account
+        NotificationModel.objects.create(
+            content = account.first_name + " " + account.last_name + " yeni tələbə əlavə etdi: " + self.get_full_name,
+            type = "A"
+        )
+        return super(StudentModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        account = self.season.branch.branch_accountant.get().account
+        NotificationModel.objects.create(
+            content = account.first_name + " " + account.last_name + " bir tələbə sildi: " + self.get_full_name,
+            type = "D"
+        )
+        return super(StudentModel, self).delete(*args, **kwargs)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
