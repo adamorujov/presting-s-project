@@ -66,7 +66,7 @@ class StudentAdmin(admin.ModelAdmin):
     def delete_queryset(self, request, queryset):
         content = str(queryset.count()) + " tələbə silindi: "
         for query in queryset:
-            content += query.first_name + " " + query.last_name + ", "
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
         NotificationModel.objects.create(
             content = content,
             type = "D"
@@ -75,7 +75,7 @@ class StudentAdmin(admin.ModelAdmin):
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'season' and not request.user.is_superuser:
-            kwargs["queryset"] = SeasonModel.objects.filter(season__branch_accountant__account = request.user)
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
             return super().formfield_for_foreignkey(db_field, request, **kwargs)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
@@ -108,6 +108,32 @@ class TeacherAdmin(admin.ModelAdmin):
     search_fields = ("first_name", "last_name")
 
     inlines = [TeacherPaymentInformationAdmin]
+
+    def get_queryset(self, request):
+        qs = super(TeacherAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " müəllim silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+
+    
     actions = ("mark_as_qe", "mark_as_ts", "mark_as_fm")
 
     @admin.action(description="Seçilmiş Müəllimləri qeyd edilməyib kimi göstər")

@@ -4,7 +4,11 @@ from prestij.models import (
     SocialMediaModel, NewsModel, VideoGalleryModel,
     PhotoGalleryModel, PhotoGalleryItem, TeacherModel, ServiceModel,
     BranchModel, BranchContactNumberModel, SuccessModel,
-    SuccessItemModel, ResumeModel, ContactModel, OnlineRegister, EditionModel
+    SuccessItemModel, ResumeModel, ContactModel, 
+    AbiturientOnlineRegister, MasterOnlineRegister, MIQOnlineRegister,
+    CivilServiceOnlineRegister, ComputerCourseOnlineRegister, AccountingOnlineRegister,
+    ForeignLanguageOnlineRegister, HighSchoolOnlineRegister, PreSchoolOnlineRegister,
+    PrimarySchoolOnlineRegister, EditionModel
 )
 from django.contrib.admin.sites import AdminSite
 
@@ -201,10 +205,80 @@ class ContactAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
-@admin.register(OnlineRegister)
-class OnlineRegisterAdmin(admin.ModelAdmin):
+@admin.register(AbiturientOnlineRegister)
+class AbiturientOnlineRegisterAdmin(admin.ModelAdmin):
     readonly_fields = ("full_name", "email", "mobile_number", "school",
-    "university", "speciality", "identity_card_number", "point")
+    "identity_card_number", "group", "student_class", "dim_point", "section")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(MasterOnlineRegister)
+class MasterOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number",
+    "university", "speciality", "identity_card_number", "dim_point", "language")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(MIQOnlineRegister)
+class MIQOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number",
+    "university", "speciality", "identity_card_number")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(CivilServiceOnlineRegister)
+class CivilServiceOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number",
+    "university", "identity_card_number")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(ForeignLanguageOnlineRegister)
+class ForeignLanguageOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number",
+    "identity_card_number", "language")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(ComputerCourseOnlineRegister)
+class ComputerCourseOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number", "identity_card_number", "program_type")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(AccountingOnlineRegister)
+class AccountingOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number",
+    "identity_card_number")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(HighSchoolOnlineRegister)
+class HighSchoolOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number", "identity_card_number", "student_class")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(PreSchoolOnlineRegister)
+class PreSchoolOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number",
+    "identity_card_number")
+
+    def has_add_permission(self, request, obj=None):
+        return False
+    
+@admin.register(PrimarySchoolOnlineRegister)
+class PrimarySchoolOnlineRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ("full_name", "email", "mobile_number",
+    "identity_card_number")
 
     def has_add_permission(self, request, obj=None):
         return False

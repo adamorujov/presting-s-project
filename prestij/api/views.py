@@ -6,16 +6,22 @@ from prestij.models import (
     SocialMediaModel, NewsModel, VideoGalleryModel,
     PhotoGalleryModel, PhotoGalleryItem, TeacherModel, ServiceModel,
     BranchModel, BranchContactNumberModel, SuccessModel,
-    SuccessItemModel, ResumeModel, ContactModel, OnlineRegister,
-    EditionModel
+    SuccessItemModel, ResumeModel, ContactModel, TeacherOnlineRegister,
+    AbiturientOnlineRegister, MasterOnlineRegister, MIQOnlineRegister,
+    CivilServiceOnlineRegister, ComputerCourseOnlineRegister, ForeignLanguageOnlineRegister,
+    AccountingOnlineRegister, HighSchoolOnlineRegister, PreSchoolOnlineRegister,
+    PrimarySchoolOnlineRegister, EditionModel
 )
 from prestij.api.serializers import (
     SettingsSerializer, BannerSerializer, ContactInformationSerializer,
     SocialMediaSerializer, NewsSerializer, VideoGallerySerializer,
     PhotoGallerySerializer, PhotoGalleryItemSerializer, TeacherSerializer, ServiceSerializer,
     BranchSerializer, BranchContactNumberSerializer, SuccessSerializer,
-    SuccessItemSerializer, ResumeSerializer, ContactSerializer, OnlineRegisterSerializer,
-    EditionSerializer
+    SuccessItemSerializer, ResumeSerializer, ContactSerializer, TeacherOnlineRegisterSerializer,
+    AbiturientOnlineRegisterSerializer, MasterOnlineRegisterSerializer, MIQOnlineRegisterSerializer,
+    CivilServiceOnlineRegisterSerializer, ComputerCourseOnlineRegisterSerializer, ForeignLanguageOnlineRegisterSerializer,
+    AccountingOnlineRegisterSerializer, HighSchoolOnlineRegisterSerializer, PreSchoolOnlineRegisterSerializer,
+    PrimarySchoolOnlineRegisterSerializer, EditionSerializer
 )
 
 class SettingsListAPIView(ListAPIView):
@@ -97,9 +103,49 @@ class ContactCreateAPIView(CreateAPIView):
     queryset = ContactModel.objects.all()
     serializer_class = ContactSerializer
 
-class OnlineRegisterCreateAPIView(CreateAPIView):
-    queryset = OnlineRegister.objects.all()
-    serializer_class = OnlineRegisterSerializer
+class TeacherOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = TeacherOnlineRegister.objects.all()
+    serializer_class = TeacherOnlineRegisterSerializer
+
+class AbiturientOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = AbiturientOnlineRegister.objects.all()
+    serializer_class = AbiturientOnlineRegisterSerializer
+
+class MasterOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = MasterOnlineRegister.objects.all()
+    serializer_class = MasterOnlineRegisterSerializer
+
+class MIQOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = MIQOnlineRegister.objects.all()
+    serializer_class = MIQOnlineRegisterSerializer
+
+class CivilServiceOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = CivilServiceOnlineRegister.objects.all()
+    serializer_class = CivilServiceOnlineRegisterSerializer
+
+class ComputerCourseOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = ComputerCourseOnlineRegister.objects.all()
+    serializer_class = ComputerCourseOnlineRegisterSerializer
+
+class ForeignLanguageOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = ForeignLanguageOnlineRegister.objects.all()
+    serializer_class = ForeignLanguageOnlineRegisterSerializer
+
+class AccountingOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = AccountingOnlineRegister.objects.all()
+    serializer_class = AccountingOnlineRegisterSerializer
+
+class HighSchoolOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = HighSchoolOnlineRegister.objects.all()
+    serializer_class = HighSchoolOnlineRegisterSerializer
+
+class PreSchoolOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = PreSchoolOnlineRegister.objects.all()
+    serializer_class = PreSchoolOnlineRegisterSerializer
+
+class PrimarySchoolOnlineRegisterCreateAPIView(CreateAPIView):
+    queryset = PrimarySchoolOnlineRegister.objects.all()
+    serializer_class = PrimarySchoolOnlineRegisterSerializer
 
 class EditionListAPIView(ListAPIView):
     queryset = EditionModel.objects.all()

@@ -48,6 +48,7 @@ class SeasonModel(models.Model):
                 type = "A"
             )
         return super(SeasonModel, self).save(*args, **kwargs)
+    
     def delete(self, *args, **kwargs):
         NotificationModel.objects.create(
             content = self.branch.name + " filialından bir sezon silindi: " + self.name,
@@ -129,6 +130,10 @@ class TeacherModel(models.Model):
         verbose_name = "Müəllim"
         verbose_name_plural = "Müəllimlər"
 
+    @property
+    def get_full_name(self):
+        return self.first_name + " " + self.last_name
+
     def save(self, *args, **kwargs):
         if self.id and self.payment_date:
             mon = 8
@@ -160,7 +165,29 @@ class TeacherModel(models.Model):
                     paymentinfo.payment_amount = self.payment_amount
                     paymentinfo.save()
 
+            NotificationModel.objects.create(
+                content = self.season.branch.name + " filialında bir müəllimin məlumatları yeniləndi: " + self.get_full_name,
+                type = "U"
+            )
+        elif self.id:
+            NotificationModel.objects.create(
+                content = self.season.branch.name + " filialında bir müəllimin məlumatları yeniləndi: " + self.get_full_name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = self.season.branch.name + " filialına bir müəllim əlavə olundu: " + self.get_full_name,
+                type = "A"
+            )
+
         return super(TeacherModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = self.season.branch.name + " filialından bir müəllim silindi: " + self.get_full_name,
+            type = "D"
+        )
+        return super(TeacherModel, self).delete(*args, **kwargs)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -189,6 +216,26 @@ class AbiturientBlockModel(models.Model):
         verbose_name = "Blok"
         verbose_name_plural = "Abituriyent blokları"
 
+    def save(self, *args, **kwargs):
+        if self.id:
+            NotificationModel.objects.create(
+                content = "Abituriyent bloku yeniləndi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = "Abituriyent bloku əlavə olundu: " + self.name,
+                type = "A"
+            )
+        return super(AbiturientBlockModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = "Bir Abituriyent bloku silindi: " + self.name,
+            type = "D"
+        )
+        return super(AbiturientBlockModel, self).delete(*args, **kwargs)
+
     def __str__(self):
         return self.name
     
@@ -198,6 +245,27 @@ class AbiturientClassModel(models.Model):
     class Meta:
         verbose_name = "Sinif"
         verbose_name_plural = "Abituriyent sinifləri"
+
+    def save(self, *args, **kwargs):
+        if self.id:
+            NotificationModel.objects.create(
+                content = "Abituriyent sinifi yeniləndi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = "Abituriyent sinifi əlavə olundu: " + self.name,
+                type = "A"
+            )
+        return super(AbiturientClassModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = "Bir Abituriyent bloku silindi: " + self.name,
+            type = "D"
+        )
+        return super(AbiturientClassModel, self).delete(*args, **kwargs)
+
 
     def __str__(self):
         return self.name
@@ -209,6 +277,27 @@ class AbiturientSubjectModel(models.Model):
         verbose_name = "Fənn"
         verbose_name_plural = "Abituriyent fənnləri"
 
+    def save(self, *args, **kwargs):
+        if self.id:
+            NotificationModel.objects.create(
+                content = "Abituriyent fənni yeniləndi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = "Abituriyent fənni əlavə olundu: " + self.name,
+                type = "A"
+            )
+        return super(AbiturientSubjectModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = "Bir Abituriyent fənni silindi: " + self.name,
+            type = "D"
+        )
+        return super(AbiturientSubjectModel, self).delete(*args, **kwargs)
+
+
     def __str__(self):
         return self.name
     
@@ -218,6 +307,27 @@ class AbiturientGroupModel(models.Model):
     class Meta:
         verbose_name = "Qrup"
         verbose_name_plural = "Abituriyent qrupları"
+
+    def save(self, *args, **kwargs):
+        if self.id:
+            NotificationModel.objects.create(
+                content = "Abituriyent qrupu yeniləndi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = "Abituriyent qrupu əlavə olundu: " + self.name,
+                type = "A"
+            )
+        return super(AbiturientGroupModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = "Bir Abituriyent qrupu silindi: " + self.name,
+            type = "D"
+        )
+        return super(AbiturientGroupModel, self).delete(*args, **kwargs)
+
 
     def __str__(self):
         return self.name
@@ -271,8 +381,25 @@ class AbiturientModel(models.Model):
                     paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
+        elif self.id:
+            NotificationModel.objects.create(
+                content = self.student.season.branch.name + " filialında bir abituriyentin məlumatları yeniləndi: " + self.student.get_full_name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = self.student.season.branch.name + " filialına bir abituriyent əlavə olundu: " + self.student.get_full_name,
+                type = "A"
+            )
 
         return super(AbiturientModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = self.student.season.branch.name + " filialından bir müəllim silindi: " + self.get_full_name,
+            type = "D"
+        )
+        return super(AbiturientModel, self).delete(*args, **kwargs)
 
     def __str__(self):
         return self.student.first_name + " " + self.student.last_name
@@ -284,6 +411,27 @@ class MasterForeignLanguageModel(models.Model):
         verbose_name = "Xarici dil"
         verbose_name_plural = "Magistratura xarici dilləri"
 
+    def save(self, *args, **kwargs):
+        if self.id:
+            NotificationModel.objects.create(
+                content = "Magistraturaya hazırlıq xarici dili yeniləndi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = "Magistraturaya hazırlıq xarici dili əlavə olundu: " + self.name,
+                type = "A"
+            )
+        return super(MasterForeignLanguageModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = "Magistraturaya hazırlıq xarici dili silindi: " + self.name,
+            type = "D"
+        )
+        return super(MasterForeignLanguageModel, self).delete(*args, **kwargs)
+
+
     def __str__(self):
         return self.name
 
@@ -294,6 +442,27 @@ class MasterSubjectModel(models.Model):
         verbose_name = "Fənn"
         verbose_name_plural = "Magistraturaya hazırlıq fənnləri"
 
+    def save(self, *args, **kwargs):
+        if self.id:
+            NotificationModel.objects.create(
+                content = "Magistraturaya hazırlıq fənni yeniləndi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = "Magistraturaya hazırlıq fənni əlavə olundu: " + self.name,
+                type = "A"
+            )
+        return super(MasterSubjectModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = "Magistraturaya hazırlıq fənni silindi: " + self.name,
+            type = "D"
+        )
+        return super(MasterSubjectModel, self).delete(*args, **kwargs)
+
+
     def __str__(self):
         return self.name
     
@@ -303,6 +472,27 @@ class MasterGroupModel(models.Model):
     class Meta:
         verbose_name = "Qrup"
         verbose_name_plural = "Magistraturaya hazırlıq qrupları"
+
+    def save(self, *args, **kwargs):
+        if self.id:
+            NotificationModel.objects.create(
+                content = "Magistraturaya hazırlıq qrupu yeniləndi: " + self.name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = "Magistraturaya hazırlıq qrupu əlavə olundu: " + self.name,
+                type = "A"
+            )
+        return super(MasterGroupModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = "Magistraturaya hazırlıq qrupu silindi: " + self.name,
+            type = "D"
+        )
+        return super(MasterGroupModel, self).delete(*args, **kwargs)
+
 
     def __str__(self):
         return self.name
@@ -350,6 +540,16 @@ class MasterModel(models.Model):
                     paymentinfo.payment_date = date(year, mon, day)
                     paymentinfo.payment_amount = self.student.payment_amount
                     paymentinfo.save()
+        elif self.id:
+            NotificationModel.objects.create(
+                content = self.student.season.branch.name + " filialında bir abituriyentin məlumatları yeniləndi: " + self.student.get_full_name,
+                type = "U"
+            )
+        else:
+            NotificationModel.objects.create(
+                content = self.student.season.branch.name + " filialına bir abituriyent əlavə olundu: " + self.student.get_full_name,
+                type = "A"
+            )
         return super(MasterModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -408,6 +608,13 @@ class MIQModel(models.Model):
                     paymentinfo.save()
 
         return super(MIQModel, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        NotificationModel.objects.create(
+            content = self.student.season.branch.name + " filialından bir müəllim silindi: " + self.get_full_name,
+            type = "D"
+        )
+        return super(AbiturientModel, self).delete(*args, **kwargs)
 
     def __str__(self):
         return self.student.first_name + " " + self.student.last_name

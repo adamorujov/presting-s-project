@@ -320,25 +320,243 @@ class ContactModel(models.Model):
 
     def __str__(self):
         return self.name
-
-class OnlineRegister(models.Model):
+    
+class TeacherOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    SECTORS = (
+        ("AZ", "Azərbaycan dili"),
+        ("RU", "Rus dili"),
+    )
     full_name = models.CharField("Ad, soyad", max_length=100)
     email = models.EmailField("Email", max_length=256)
     mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    school = models.TextField("Təhsil aldığı məktəb")
-    university = models.TextField("Bitirdiyi universitet")
-    speciality = models.TextField("İxtisas")
     identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
-    point = models.CharField("Qəbul balı", max_length=100)
+    speciality = models.TextField("İxtisas")
+    section = models.CharField("Bölmə", max_length=2, choices=SECTORS, default="AZ")
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
-        verbose_name = "Kursa onlayn qeydiyyat"
-        verbose_name_plural = "Kursa onlayn qeydiyyatlar"
+        verbose_name = "Müəllim qeydiyyat"
+        verbose_name_plural = "Müəllim qeydiyyatlar"
         ordering = ("-id",)
 
     def __str__(self):
         return self.full_name
 
+
+class AbiturientOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    SECTORS = (
+        ("AZ", "Azərbaycan dili"),
+        ("RU", "Rus dili"),
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    school = models.TextField("Təhsil aldığı məktəb")
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    group = models.CharField("Qrup", max_length=50)
+    student_class = models.IntegerField("Sinif")
+    dim_point = models.FloatField("Dim balı")
+    section = models.CharField("Bölmə", max_length=2, choices=SECTORS, default="AZ")
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "Abituriyent qeydiyyat"
+        verbose_name_plural = "Abituriyent qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+
+class MasterOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    university = models.TextField("Bitirdiyi universitet")
+    speciality = models.TextField("İxtisas")
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    dim_point = models.FloatField("Qəbul balı")
+    language = models.CharField("Xarici dil", max_length=100)
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "MIQ qeydiyyat"
+        verbose_name_plural = "MIQ qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+
+class MIQOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    university = models.TextField("Bitirdiyi universitet")
+    speciality = models.TextField("İxtisas")
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "MIQ qeydiyyat"
+        verbose_name_plural = "MIQ qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+    
+class CivilServiceOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    university = models.TextField("Bitirdiyi universitet")
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "Dövlət qulluğu qeydiyyat"
+        verbose_name_plural = "Dövlət qulluğu qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+    
+class ForeignLanguageOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    language = models.CharField("Xarici dil", max_length=100)
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "Xarici dil qeydiyyat"
+        verbose_name_plural = "Xarici dillər qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+
+class ComputerCourseOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    program_type = models.CharField("Proqram növü", max_length=100)
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "Kompüter kursu qeydiyyat"
+        verbose_name_plural = "Kompüter kursu qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+    
+class AccountingOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "Mühasibatlıq qeydiyyat"
+        verbose_name_plural = "Mühasibatlıq qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+    
+class HighSchoolOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    student_class = models.IntegerField("Sinif")
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "Liseylərə hazırlıq qeydiyyat"
+        verbose_name_plural = "Liseylərə hazırlıq qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+    
+class PreSchoolOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "Məktəbəqədər hazırlıq qeydiyyat"
+        verbose_name_plural = "Məktəbəqədər hazırlıq qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+    
+class PrimarySchoolOnlineRegister(models.Model):
+    STATUS = (
+        ("T", "Tamamlandı"),
+        ("TM", "Tamamlanmadı")
+    )
+    full_name = models.CharField("Ad, soyad", max_length=100)
+    email = models.EmailField("Email", max_length=256)
+    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    student_class = models.IntegerField("Sinif")
+    status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
+
+    class Meta:
+        verbose_name = "İbtidai qeydiyyat"
+        verbose_name_plural = "İbtidai qeydiyyatlar"
+        ordering = ("-id",)
+
+    def __str__(self):
+        return self.full_name
+    
 class EditionModel(models.Model):
     title = models.TextField("Başlıq")
     image = models.ImageField("Şəkil", upload_to="edition_images/", blank=True, null=True)

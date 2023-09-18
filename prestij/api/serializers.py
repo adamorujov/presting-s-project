@@ -4,8 +4,11 @@ from prestij.models import (
     SocialMediaModel, NewsModel, VideoGalleryModel,
     PhotoGalleryModel, PhotoGalleryItem, TeacherModel, ServiceModel,
     BranchModel, BranchContactNumberModel, SuccessModel,
-    SuccessItemModel, ResumeModel, ContactModel, OnlineRegister, 
-    EditionModel
+    SuccessItemModel, ResumeModel, ContactModel, TeacherOnlineRegister,
+    AbiturientOnlineRegister, MasterOnlineRegister, MIQOnlineRegister,
+    CivilServiceOnlineRegister, ComputerCourseOnlineRegister, ForeignLanguageOnlineRegister,
+    AccountingOnlineRegister, HighSchoolOnlineRegister, PreSchoolOnlineRegister,
+    PrimarySchoolOnlineRegister, EditionModel,
 )
 
 class SettingsSerializer(serializers.ModelSerializer):
@@ -91,10 +94,61 @@ class ContactSerializer(serializers.ModelSerializer):
         model = ContactModel
         fields = "__all__"
 
-class OnlineRegisterSerializer(serializers.ModelSerializer):
+class TeacherOnlineRegisterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OnlineRegister
+        model = TeacherOnlineRegister
         fields = "__all__"
+
+class AbiturientOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AbiturientOnlineRegister
+        fields = "__all__"
+
+class MasterOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MasterOnlineRegister
+        fields = "__all__"
+
+class MIQOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MIQOnlineRegister
+        fields = "__all__"
+
+class CivilServiceOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CivilServiceOnlineRegister
+        fields = "__all__"
+
+class ComputerCourseOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComputerCourseOnlineRegister
+        fields = "__all__"
+
+class ForeignLanguageOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ForeignLanguageOnlineRegister
+        fields = "__all__"
+
+class AccountingOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AccountingOnlineRegister
+        fields = "__all__"
+
+class HighSchoolOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HighSchoolOnlineRegister
+        fields = "__all__"
+
+class PreSchoolOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PreSchoolOnlineRegister
+        fields = "__all__"
+
+class PrimarySchoolOnlineRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PrimarySchoolOnlineRegister
+        fields = "__all__"
+
 
 class EditionSerializer(serializers.ModelSerializer):
     class Meta:
