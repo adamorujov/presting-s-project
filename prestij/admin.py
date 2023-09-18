@@ -433,7 +433,17 @@ def get_app_list(self, request, app_label=None):
                     "Nəşrlərimiz": 12,
                     "CVlər": 13,
                     "Mesajlar": 14,
-                    "Kursa onlayn qeydiyyatlar": 15,
+                    "Müəllim qeydiyyatlar": 15,
+                    "Abituriyent qeydiyyatlar": 16,
+                    "Master qeydiyyatlar": 17,
+                    "MIQ qeydiyyatlar": 18,
+                    "Dövlət qulluğu qeydiyyatlar": 19,
+                    "Kompüter kursu qeydiyyatlar": 20,
+                    "Xarici dillər qeydiyyatlar": 21,
+                    "Mühasibatlıq qeydiyyatlar": 22,
+                    "Liseylərə hazırlıq qeydiyyatlar": 23,
+                    "Məktəbəqədər hazırlıq qeydiyyatlar": 24,
+                    "İbtidai qeydiyyatlar": 25,
                 }
                 app['models'].sort(key=lambda x: ordering[x['name']])
 
