@@ -330,10 +330,10 @@ class TeacherOnlineRegister(models.Model):
         ("AZ", "Azərbaycan dili"),
         ("RU", "Rus dili"),
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
-    email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    full_name = models.TextField("Ad, soyad")
+    email = models.EmailField("Email")
+    mobile_number = models.TextField("Mobil nömrə")
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     speciality = models.TextField("İxtisas")
     section = models.CharField("Bölmə", max_length=2, choices=SECTORS, default="AZ")
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
@@ -356,12 +356,12 @@ class AbiturientOnlineRegister(models.Model):
         ("AZ", "Azərbaycan dili"),
         ("RU", "Rus dili"),
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    mobile_number = models.TextField("Mobil nömrə")
     school = models.TextField("Təhsil aldığı məktəb")
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
-    group = models.CharField("Qrup", max_length=50)
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
+    group = models.TextField("Qrup")
     student_class = models.IntegerField("Sinif")
     dim_point = models.FloatField("Dim balı")
     section = models.CharField("Bölmə", max_length=2, choices=SECTORS, default="AZ")
@@ -380,14 +380,14 @@ class MasterOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    mobile_number = models.TextField("Mobil nömrə")
     university = models.TextField("Bitirdiyi universitet")
     speciality = models.TextField("İxtisas")
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     dim_point = models.FloatField("Qəbul balı")
-    language = models.CharField("Xarici dil", max_length=100)
+    language = models.TextField("Xarici dil")
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
@@ -403,12 +403,12 @@ class MIQOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    mobile_number = models.TextField("Mobil nömrə")
     university = models.TextField("Bitirdiyi universitet")
     speciality = models.TextField("İxtisas")
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
@@ -424,11 +424,11 @@ class CivilServiceOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
+    mobile_number = models.TextField("Mobil nömrə")
     university = models.TextField("Bitirdiyi universitet")
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
@@ -444,11 +444,11 @@ class ForeignLanguageOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
-    language = models.CharField("Xarici dil", max_length=100)
+    mobile_number = models.TextField("Mobil nömrə")
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
+    language = models.TextField("Xarici dil")
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
@@ -464,11 +464,11 @@ class ComputerCourseOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
-    program_type = models.CharField("Proqram növü", max_length=100)
+    mobile_number = models.TextField("Mobil nömrə")
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
+    program_type = models.TextField("Proqram növü")
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
@@ -484,10 +484,10 @@ class AccountingOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    mobile_number = models.TextField("Mobil nömrə")
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
@@ -503,10 +503,10 @@ class HighSchoolOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    mobile_number = models.TextField("Mobil nömrə")
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     student_class = models.IntegerField("Sinif")
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
@@ -523,10 +523,10 @@ class PreSchoolOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    mobile_number = models.TextField("Mobil nömrə")
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
     class Meta:
@@ -542,10 +542,10 @@ class PrimarySchoolOnlineRegister(models.Model):
         ("T", "Tamamlandı"),
         ("TM", "Tamamlanmadı")
     )
-    full_name = models.CharField("Ad, soyad", max_length=100)
+    full_name = models.TextField("Ad, soyad")
     email = models.EmailField("Email", max_length=256)
-    mobile_number = models.CharField("Mobil nömrə", max_length=50)
-    identity_card_number = models.CharField("Şəxsiyyət vəsiqəsinin nömrəsi", max_length=50, blank=True, null=True)
+    mobile_number = models.TextField("Mobil nömrə")
+    identity_card_number = models.TextField("Şəxsiyyət vəsiqəsinin nömrəsi", blank=True, null=True)
     student_class = models.IntegerField("Sinif")
     status = models.CharField("Status", choices=STATUS, max_length=2, default="TM")
 
