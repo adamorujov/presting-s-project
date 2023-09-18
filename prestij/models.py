@@ -70,8 +70,8 @@ class ContactInformationModel(models.Model):
 
 class SocialMediaModel(models.Model):
     name = models.CharField("Ad", max_length=100)
-    icon_name = models.CharField("İkon", max_length=100)
-    color_code = models.CharField("Rəng kodu", max_length=10, blank=True, null=True)
+    icon_name = models.TextField("İkon")
+    color_code = models.TextField("Rəng kodu", blank=True, null=True)
     link = models.URLField("Link", max_length=2048, blank=True, null=True)
     is_active = models.BooleanField("Status", default=False)
 
@@ -141,8 +141,8 @@ class TeacherModel(models.Model):
     name = models.CharField("Ad", max_length=100)
     image = models.ImageField("Şəkil", upload_to="teacher_images/", blank=True, null=True)
     surname = models.CharField("Soyad", max_length=100)
-    profession = models.CharField("Sahə", max_length=100, blank=True, null=True)
-    mission = models.CharField("Vəzifə", max_length=100, blank=True, null=True)
+    profession = models.TextField("Sahə", blank=True, null=True)
+    mission = models.TextField("Vəzifə", blank=True, null=True)
     about = models.TextField("Haqqında", blank=True, null=True)
     is_active = models.BooleanField("Status", default=False)
 
@@ -229,75 +229,75 @@ class SuccessItemModel(models.Model):
 
 class ResumeModel(models.Model):
     # personal info
-    vacancy_name = models.TextField("Müraciət edilən vakansiyanın adı", max_length=528)
-    full_name = models.TextField("Soyad, ad, ata adı", max_length=528)
-    email = models.EmailField("Email", max_length=256)
-    birthdate = models.TextField("Doğum tarixi", max_length=256)
-    subject = models.TextField("Tədris etmək istənilən fənn", max_length=528)
-    home_phone = models.TextField("Ev telefon nömrəsi", max_length=50)
-    mobile_phone = models.TextField("Mobil nömrə", max_length=50)
-    address = models.TextField("Ünvan", max_length=528)
+    vacancy_name = models.TextField("Müraciət edilən vakansiyanın adı")
+    full_name = models.TextField("Soyad, ad, ata adı")
+    email = models.EmailField("Email")
+    birthdate = models.TextField("Doğum tarixi")
+    subject = models.TextField("Tədris etmək istənilən fənn")
+    home_phone = models.TextField("Ev telefon nömrəsi")
+    mobile_phone = models.TextField("Mobil nömrə")
+    address = models.TextField("Ünvan")
     
 
     # work experience
-    work_start_end_time1 = models.TextField("İşlədiyi başlanğıc və son tarixlər 1", max_length=528, blank=True, null=True)
-    company_name1 = models.TextField("Şirkətin adı, ünvanı və fəaliyyət göstərdiyi sahə 1", max_length=2048, blank=True, null=True)
-    duty1 = models.TextField("Vəzifə və əsas öhdəliklər 1", max_length=2048, blank=True, null=True)
-    leaving_reason1 = models.TextField("Tərk etmə səbəbi 1", max_length=2048, blank=True, null=True)
+    work_start_end_time1 = models.TextField("İşlədiyi başlanğıc və son tarixlər 1", blank=True, null=True)
+    company_name1 = models.TextField("Şirkətin adı, ünvanı və fəaliyyət göstərdiyi sahə 1", blank=True, null=True)
+    duty1 = models.TextField("Vəzifə və əsas öhdəliklər 1", blank=True, null=True)
+    leaving_reason1 = models.TextField("Tərk etmə səbəbi 1", blank=True, null=True)
 
-    work_start_end_time2 = models.TextField("İşlədiyi başlanğıc və son tarixlər 2", max_length=528, blank=True, null=True)
-    company_name2 = models.TextField("Şirkətin adı, ünvanı və fəaliyyət göstərdiyi sahə 2", max_length=2048, blank=True, null=True)
-    duty2 = models.TextField("Vəzifə və əsas öhdəliklər 2", max_length=2048, blank=True, null=True)
-    leaving_reason2 = models.TextField("Tərk etmə səbəbi 2", max_length=2048, blank=True, null=True)
+    work_start_end_time2 = models.TextField("İşlədiyi başlanğıc və son tarixlər 2", blank=True, null=True)
+    company_name2 = models.TextField("Şirkətin adı, ünvanı və fəaliyyət göstərdiyi sahə 2", blank=True, null=True)
+    duty2 = models.TextField("Vəzifə və əsas öhdəliklər 2", blank=True, null=True)
+    leaving_reason2 = models.TextField("Tərk etmə səbəbi 2", blank=True, null=True)
 
-    work_start_end_time3 = models.TextField("İşlədiyi başlanğıc və son tarixlər 3", max_length=528, blank=True, null=True)
-    company_name3 = models.TextField("Şirkətin adı, ünvanı və fəaliyyət göstərdiyi sahə 3", max_length=2048, blank=True, null=True)
-    duty3 = models.TextField("Vəzifə və əsas öhdəliklər 3", max_length=2048, blank=True, null=True)
-    leaving_reason3 = models.TextField("Tərk etmə səbəbi 3", max_length=2048, blank=True, null=True)
+    work_start_end_time3 = models.TextField("İşlədiyi başlanğıc və son tarixlər 3", blank=True, null=True)
+    company_name3 = models.TextField("Şirkətin adı, ünvanı və fəaliyyət göstərdiyi sahə 3", blank=True, null=True)
+    duty3 = models.TextField("Vəzifə və əsas öhdəliklər 3", blank=True, null=True)
+    leaving_reason3 = models.TextField("Tərk etmə səbəbi 3", blank=True, null=True)
 
     # education
-    ed_start_end_time1 = models.TextField("Təhsil aldığı başlanğıc və son tarix 1", max_length=528, blank=True, null=True)
-    university1 = models.TextField("Universitet 1", max_length=528, blank=True, null=True)
-    speciality1 = models.TextField("İxtisas və dərəcə 1", max_length=528, blank=True, null=True)
-    result1 = models.TextField("Nəticə/Qiymət ortalaması 1", max_length=528, blank=True, null=True)
+    ed_start_end_time1 = models.TextField("Təhsil aldığı başlanğıc və son tarix 1", blank=True, null=True)
+    university1 = models.TextField("Universitet 1", blank=True, null=True)
+    speciality1 = models.TextField("İxtisas və dərəcə 1", blank=True, null=True)
+    result1 = models.TextField("Nəticə/Qiymət ortalaması 1", blank=True, null=True)
 
-    ed_start_end_time2 = models.TextField("Təhsil aldığı başlanğıc və son tarix 2", max_length=528, blank=True, null=True)
-    university2 = models.TextField("Universitet 2", max_length=528, blank=True, null=True)
-    speciality2 = models.TextField("İxtisas və dərəcə 2", max_length=528, blank=True, null=True)
-    result2 = models.TextField("Nəticə/Qiymət ortalaması 2", max_length=528, blank=True, null=True)
+    ed_start_end_time2 = models.TextField("Təhsil aldığı başlanğıc və son tarix 2", blank=True, null=True)
+    university2 = models.TextField("Universitet 2", blank=True, null=True)
+    speciality2 = models.TextField("İxtisas və dərəcə 2", blank=True, null=True)
+    result2 = models.TextField("Nəticə/Qiymət ortalaması 2", blank=True, null=True)
 
-    ed_start_end_time3 = models.TextField("Təhsil aldığı başlanğıc və son tarix 3", max_length=528, blank=True, null=True)
-    university3 = models.TextField("Universitet 3", max_length=528, blank=True, null=True)
-    speciality3 = models.TextField("İxtisas və dərəcə 3", max_length=528, blank=True, null=True)
-    result3 = models.TextField("Nəticə/Qiymət ortalaması 3", max_length=50, blank=True, null=True)
+    ed_start_end_time3 = models.TextField("Təhsil aldığı başlanğıc və son tarix 3", blank=True, null=True)
+    university3 = models.TextField("Universitet 3", blank=True, null=True)
+    speciality3 = models.TextField("İxtisas və dərəcə 3", blank=True, null=True)
+    result3 = models.TextField("Nəticə/Qiymət ortalaması 3", blank=True, null=True)
 
     # certificates, trainings, seminars
-    ce_start_end_time1 = models.TextField("İştirak tarixi: başlanğıc və son tarix 1", max_length=528, blank=True, null=True)
-    qualification1 = models.TextField("Kvalifikasiya 1", max_length=528, blank=True, null=True)
-    place1 = models.TextField("Keçirildiyi məkan 1", max_length=528, blank=True, null=True)
-    success1 = models.TextField("Əldə etdiyi nailiyyət 1", max_length=528, blank=True, null=True)
+    ce_start_end_time1 = models.TextField("İştirak tarixi: başlanğıc və son tarix 1", blank=True, null=True)
+    qualification1 = models.TextField("Kvalifikasiya 1", blank=True, null=True)
+    place1 = models.TextField("Keçirildiyi məkan 1", blank=True, null=True)
+    success1 = models.TextField("Əldə etdiyi nailiyyət 1", blank=True, null=True)
 
-    ce_start_end_time2 = models.TextField("İştirak tarixi: başlanğıc və son tarix 2", max_length=528, blank=True, null=True)
-    qualification2 = models.TextField("Kvalifikasiya 2", max_length=528, blank=True, null=True)
-    place2 = models.TextField("Keçirildiyi məkan 2", max_length=528, blank=True, null=True)
-    success2 = models.TextField("Əldə etdiyi nailiyyət 2", max_length=528, blank=True, null=True)
+    ce_start_end_time2 = models.TextField("İştirak tarixi: başlanğıc və son tarix 2", blank=True, null=True)
+    qualification2 = models.TextField("Kvalifikasiya 2", blank=True, null=True)
+    place2 = models.TextField("Keçirildiyi məkan 2", blank=True, null=True)
+    success2 = models.TextField("Əldə etdiyi nailiyyət 2", blank=True, null=True)
 
-    ce_start_end_time3 = models.TextField("İştirak tarixi: başlanğıc və son tarix 3", max_length=528, blank=True, null=True)
-    qualification3 = models.TextField("Kvalifikasiya 3", max_length=528, blank=True, null=True)
-    place3 = models.TextField("Keçirildiyi məkan 3", max_length=528, blank=True, null=True)
-    success3 = models.TextField("Əldə etdiyi nailiyyət 3", max_length=528, blank=True, null=True)
+    ce_start_end_time3 = models.TextField("İştirak tarixi: başlanğıc və son tarix 3", blank=True, null=True)
+    qualification3 = models.TextField("Kvalifikasiya 3", blank=True, null=True)
+    place3 = models.TextField("Keçirildiyi məkan 3", blank=True, null=True)
+    success3 = models.TextField("Əldə etdiyi nailiyyət 3", blank=True, null=True)
 
     # other successes
     other_successes = models.TextField("Digər nailiyyətlər", blank=True, null=True)
 
     # references
-    reference_full_name1 = models.TextField("Soyad, adı, ata adı 1", max_length=528, blank=True, null=True)
-    phone_number1 = models.TextField("Mobil nömrə 1", max_length=50, blank=True, null=True)
-    relation1 = models.TextField("Əlaqə 1", max_length=528, blank=True, null=True)
+    reference_full_name1 = models.TextField("Soyad, adı, ata adı 1", blank=True, null=True)
+    phone_number1 = models.TextField("Mobil nömrə 1", blank=True, null=True)
+    relation1 = models.TextField("Əlaqə 1", blank=True, null=True)
 
-    reference_full_name2 = models.TextField("Soyad, adı, ata adı 2", max_length=528, blank=True, null=True)
-    phone_number2 = models.TextField("Mobil nömrə 2", max_length=50, blank=True, null=True)
-    relation2 = models.TextField("Əlaqə 2", max_length=528, blank=True, null=True)
+    reference_full_name2 = models.TextField("Soyad, adı, ata adı 2", blank=True, null=True)
+    phone_number2 = models.TextField("Mobil nömrə 2", blank=True, null=True)
+    relation2 = models.TextField("Əlaqə 2", blank=True, null=True)
 
     class Meta:
         verbose_name = "CV"
@@ -310,7 +310,7 @@ class ResumeModel(models.Model):
 class ContactModel(models.Model):
     name = models.CharField("Ad", max_length=100)
     email = models.EmailField("Email", max_length=256)
-    subject = models.CharField("Mövzu", max_length=256)
+    subject = models.TextField("Mövzu")
     message = models.TextField("Mesaj")
 
     class Meta:
