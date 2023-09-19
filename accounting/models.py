@@ -4,6 +4,7 @@ from service.models import (
     CivilServiceModel, ForeignLanguageModel, ComputerCourseModel,
     AccountingModel, HighSchoolModel, PreSchoolModel, PrimarySchoolModel
 )
+from notification.models import NotificationModel
 
 class MonthModel(models.Model):
     name = models.CharField("Ad", max_length=100)
@@ -34,6 +35,11 @@ class TeacherPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Müəllim: " + self.teacher.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(TeacherPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -58,6 +64,11 @@ class AbiturientPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Abituriyent: " + self.abiturient.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(AbiturientPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -81,6 +92,11 @@ class MasterPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Magistraturaya hazırlıq: " +  self.master.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(MasterPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -104,6 +120,11 @@ class MIQPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "MİQ: " +  self.miq.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(MIQPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -127,6 +148,11 @@ class CivilServicePaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Dövlət qulluğu: " +  self.civilservice.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(CivilServicePaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -150,6 +176,11 @@ class ForeignLanguagePaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Xarici dil: " +  self.foreignlanguage.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(ForeignLanguagePaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -173,6 +204,11 @@ class ComputerCoursePaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Kompüter kursu: " +  self.computercourse.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(ComputerCoursePaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -196,6 +232,11 @@ class AccountingPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Mühasibatlıq: " +  self.accounting.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(AccountingPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -219,6 +260,11 @@ class HighSchoolPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Liseylərə hazırlıq: " +  self.highschool.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(HighSchoolPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -242,6 +288,11 @@ class PreSchoolPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Məktəbəqədər hazırlıq: " +  self.preschool.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(PreSchoolPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -265,6 +316,11 @@ class PrimarySchoolPaymentInformationModel(models.Model):
         ).exists():
             pass
         else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "İbtidai: " +  self.primaryschool.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
             return super(PrimarySchoolPaymentInformationModel, self).save(*args, **kwargs)
 
     def __str__(self):

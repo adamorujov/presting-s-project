@@ -130,9 +130,6 @@ class TeacherAdmin(admin.ModelAdmin):
             kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
             return super().formfield_for_foreignkey(db_field, request, **kwargs)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-
-
     
     actions = ("mark_as_qe", "mark_as_ts", "mark_as_fm")
 
@@ -172,6 +169,29 @@ class AbiturientAdmin(admin.ModelAdmin):
     filter_horizontal = ('subjects', 'blocks')
 
     inlines = [AbiturientPaymentInformationAdmin]
+
+    def get_queryset(self, request):
+        qs = super(AbiturientAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " abiturient silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
     actions = ("mark_as_az", "mark_as_ru")
 
     @admin.action(description="Seçilmiş Abituriyentlər azərbaycan dili bölməsi et")
@@ -200,6 +220,29 @@ class MasterAdmin(admin.ModelAdmin):
     filter_horizontal = ("subjects",)
     inlines = [MasterPaymentInformationAdmin]
 
+    def get_queryset(self, request):
+        qs = super(MasterAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " magistraturaya hazırlıq tələbəsi silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
+
 admin.site.register(MIQSubjectModel)
 
 class MIQPaymentInformationAdmin(admin.TabularInline):
@@ -211,6 +254,29 @@ class MIQAdmin(admin.ModelAdmin):
     list_display = ("__str__", "specialty")
     filter_horizontal = ("subjects",)
     inlines = [MIQPaymentInformationAdmin]
+
+    def get_queryset(self, request):
+        qs = super(MIQAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " miq tələbəsi silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
 
 admin.site.register(CivilServiceSubjectModel)
 
@@ -224,6 +290,29 @@ class CivilServiceAdmin(admin.ModelAdmin):
     filter_horizontal = ("subjects",)
     inlines = [CivilServicePaymentInformationAdmin]
 
+    def get_queryset(self, request):
+        qs = super(CivilServiceAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " dövlət qulluğu tələbəsi silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
+
 class ForeignLanguagePaymentInformationAdmin(admin.TabularInline):
     model = ForeignLanguagePaymentInformationModel
     extra = 0
@@ -231,6 +320,29 @@ class ForeignLanguagePaymentInformationAdmin(admin.TabularInline):
 @admin.register(ForeignLanguageModel)
 class ForeignLanguageAdmin(admin.ModelAdmin):
     inlines = [ForeignLanguagePaymentInformationAdmin]
+
+    def get_queryset(self, request):
+        qs = super(ForeignLanguageAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " xarici dil tələbəsi silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
 
 
 admin.site.register(ComputerProgramTypeModel)
@@ -244,6 +356,29 @@ class ComputerCourseAdmin(admin.ModelAdmin):
     filter_horizontal = ("program_types",)
     inlines = [ComputerCoursePaymentInformationAdmin]
 
+    def get_queryset(self, request):
+        qs = super(ComputerCourseAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " kompüter kurs tələbəsi silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
+
 class AccountingPaymentInformationAdmin(admin.TabularInline):
     model = AccountingPaymentInformationModel
     extra = 0
@@ -251,6 +386,29 @@ class AccountingPaymentInformationAdmin(admin.TabularInline):
 @admin.register(AccountingModel)
 class AccountingAdmin(admin.ModelAdmin):
     inlines = [AccountingPaymentInformationAdmin]
+
+    def get_queryset(self, request):
+        qs = super(AccountingAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " mühasibatlıq tələbəsi silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
 
 
 admin.site.register(HighSchoolClassModel)
@@ -266,6 +424,29 @@ class HighSchoolAdmin(admin.ModelAdmin):
     filter_horizontal = ("subjects",)
     inlines = [HighSchoolPaymentInformationAdmin]
 
+    def get_queryset(self, request):
+        qs = super(HighSchoolAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " liseylərə hazırlıq tələbəsi silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
+
 admin.site.register(PreSchoolSubjectModel)
 
 class PreSchoolPaymentInformationAdmin(admin.TabularInline):
@@ -276,6 +457,29 @@ class PreSchoolPaymentInformationAdmin(admin.TabularInline):
 class PreSchoolAdmin(admin.ModelAdmin):
     filter_horizontal = ("subjects", )
     inlines = [PreSchoolPaymentInformationAdmin]
+
+    def get_queryset(self, request):
+        qs = super(PreSchoolAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " məktəbəqədər hazırlıq silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
 
 admin.site.register(PrimarySchoolClassModel)
 admin.site.register(PrimarySchoolSubjectModel)
@@ -289,3 +493,26 @@ class PrimarySchoolPaymentInformationAdmin(admin.TabularInline):
 class PrimarySchoolAdmin(admin.ModelAdmin):
     filter_horizontal = ("subjects",)
     inlines = [PrimarySchoolPaymentInformationAdmin]
+
+    def get_queryset(self, request):
+        qs = super(PrimarySchoolAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(season__branch__branch_accountant__account=request.user)
+
+    def delete_queryset(self, request, queryset):
+        content = str(queryset.count()) + " ibtidai silindi: "
+        for query in queryset:
+            content += query.season.branch.name + " filialı - " + query.first_name + " " + query.last_name + ", "
+        NotificationModel.objects.create(
+            content = content,
+            type = "D"
+        )
+        return super().delete_queryset(request, queryset)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'season' and not request.user.is_superuser:
+            kwargs["queryset"] = SeasonModel.objects.filter(branch__branch_accountant__account = request.user)
+            return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+ 
