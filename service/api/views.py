@@ -75,13 +75,13 @@ class SeasonTeacherListAPIView(ListAPIView):
     permission_classes = (IsAdminUser,)
 
 class SeasonCreateAPIView(CreateAPIView):
-    queryset = BranchModel.objects.all()
-    serializer_class = BranchSerializer
+    queryset = SeasonModel.objects.all()
+    serializer_class = SeasonSerializer
     permission_classes = (IsAdminUser,)
 
 class SeasonRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = BranchModel.objects.all()
-    serializer_class = BranchSerializer
+    queryset = SeasonModel.objects.all()
+    serializer_class = SeasonSerializer
     permission_classes = (IsAdminUser,)
     lookup_field = "id"
 
