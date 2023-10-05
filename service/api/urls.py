@@ -7,9 +7,11 @@ urlpatterns = [
     path("branch-create/", views.BranchCreateAPIView.as_view(), name="branch-create"),
     path("branch-retrieve-update-delete/<int:id>/", views.BranchRetrieveUpdateDestroyAPIView.as_view(), name="branch-retrieve-update-delete"),
 
-
     path("season-student-list/<int:id>/", views.SeasonStudentListAPIView.as_view(), name="season-student-list"),
     path("season-teacher-list/<int:id>/", views.SeasonTeacherListAPIView.as_view(), name="season-teacher-list"),
+    path("season-create/", views.SeasonCreateAPIView.as_view(), name="season-create"),
+    path("season-retrieve-update-delete/<int:id>/", views.SeasonRetrieveUpdateDestroyAPIView.as_view(), name="season-retrieve-update-delete"),
+
     path("accountant-list/", views.AccountantListAPIView.as_view(), name="accountant-list"),
 
     path("abiturient-block-list/", views.AbiturientBlockListAPIView.as_view(), name="abiturient-block-list"),
