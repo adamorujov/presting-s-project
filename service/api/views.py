@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from service.models import (
     BranchModel, SeasonModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
@@ -49,6 +49,17 @@ class BranchSeasonListAPIView(ListAPIView):
     serializer_class = SeasonSerializer
     permission_classes = (IsAdminUser,)
 
+class BranchCreateAPIView(CreateAPIView):
+    queryset = BranchModel.objects.all()
+    serializer_class = BranchSerializer
+    permission_classes = (IsAdminUser,)
+
+class BranchRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = BranchModel.objects.all()
+    serializer_class = BranchSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
 class SeasonStudentListAPIView(ListAPIView):
     def get_queryset(self):
         id = self.kwargs.get("id")
@@ -62,6 +73,17 @@ class SeasonTeacherListAPIView(ListAPIView):
         return TeacherModel.objects.filter(season_id=id)
     serializer_class = TeacherSerializer
     permission_classes = (IsAdminUser,)
+
+class SeasonCreateAPIView(CreateAPIView):
+    queryset = BranchModel.objects.all()
+    serializer_class = BranchSerializer
+    permission_classes = (IsAdminUser,)
+
+class SeasonRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = BranchModel.objects.all()
+    serializer_class = BranchSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
 
 class AccountantListAPIView(ListAPIView):
     queryset = AccountantModel.objects.all()

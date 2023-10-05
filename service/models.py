@@ -1,7 +1,5 @@
-from typing import Any
 from django.db import models
 from account.models import Account
-from django.apps import apps
 import accounting
 from datetime import date
 from notification.models import NotificationModel
@@ -58,13 +56,83 @@ class SeasonModel(models.Model):
 
     def __str__(self):
         return self.name
+
+class StudentCategoryModel(models.Model):
+    name = models.CharField("Ad", max_length=256)
+
+    class Meta:
+        verbose_name = "Kateqoriya"
+        verbose_name_plural = "Kateqoriyalar"
+
+    def __str__(self):
+        return self.name
+
+class BlockModel(models.Model):
+    name = models.CharField("Ad", max_length=100)
+    categories = models.ForeignKey(StudentCategoryModel, verbose_name="Kateqoriya", on_delete=models.CASCADE, related_name="category_blocks")
+
+    class Meta:
+        verbose_name = "Blok"
+        verbose_name_plural = "Bloklar"
+
+    def __str__(self):
+        return self.name
+
+class ClassModel(models.Model):
+    name = models.CharField("Ad", max_length=100)
+    categories = models.ForeignKey(StudentCategoryModel, verbose_name="Kateqoriya", on_delete=models.CASCADE, related_name="category_classes")
+
+    class Meta:
+        verbose_name = "Sinif"
+        verbose_name_plural = "Siniflər"
+
+    def __str__(self):
+        return self.name
+
+class SubjectModel(models.Model):
+    name = models.CharField("Ad", max_length=300)
+    categories = models.ForeignKey(StudentCategoryModel, verbose_name="Kateqoriya", on_delete=models.CASCADE, related_name="category_subjects")
+
+    class Meta:
+        verbose_name = "Fənn"
+        verbose_name_plural = "Fənnlər"
+
+    def __str__(self):
+        return self.name
     
+class GroupModel(models.Model):
+    name = models.CharField("Ad", max_length=200)
+    categories = models.ForeignKey(StudentCategoryModel, verbose_name="Kateqoriya", on_delete=models.CASCADE, related_name="category_groups")
+
+    class Meta:
+        verbose_name = "Qrup"
+        verbose_name_plural = "Qruplar"
+
+    def __str__(self):
+        return self.name
+
+class LanguageModel(models.Model):
+    name = models.CharField("Ad", max_length=200)
+    categories = models.ForeignKey(StudentCategoryModel, verbose_name="Kateqoriya", on_delete=models.CASCADE, related_name="category_languages")
+
+    class Meta:
+        verbose_name = "Xarici dil"
+        verbose_name_plural = "Xarici dillər"
+
+    def __str__(self):
+        return self.name 
+
 class StudentModel(models.Model):
     STATUS = (
         ("DE", "Davam edir"),
         ("D", "Dondurulub"),
         ("B", "Bitirilib")
     )
+    SECTORS = (
+        ("AZ", "Azərbaycan dili"),
+        ("RU", "Rus dili"),
+    )
+    # umumi saheler
     first_name = models.CharField("Ad", max_length=100)
     last_name = models.CharField("Soyad", max_length=100)
     phone_number1 = models.CharField("Telefon nömrəsi 1", max_length=50, blank=True, null=True)
@@ -72,6 +140,23 @@ class StudentModel(models.Model):
     wp_number = models.CharField("Whatsapp nömrəsi", max_length=50, blank=True, null=True)
     status = models.CharField("Status", max_length=2, choices=STATUS, default="DE")
     season = models.ForeignKey(SeasonModel, verbose_name="Sezon", on_delete=models.CASCADE, related_name="students")
+    categories = models.ManyToManyField(StudentCategoryModel, verbose_name="Kateqoriyalar", related_name="students")
+
+    # kateqoriya saheleri
+    # abituriyent
+    teachers = models.ManyToManyField('TeacherModel', verbose_name="Müəllimlər", related_name="teacher_students")
+    blocks = models.ManyToManyField(BlockModel, verbose_name="Bloklar", related_name="block_students", blank=True, null=True)
+    abiturient_class = models.ForeignKey(ClassModel, verbose_name="Sinif", on_delete=models.CASCADE, related_name="class_students", blank=True, null=True)
+    subjects = models.ManyToManyField(SubjectModel, verbose_name="Fənnlər", related_name="subject_students", blank=True, null=True)
+    group = models.ForeignKey(GroupModel, verbose_name="Qrup", on_delete=models.CASCADE, related_name="group_students", blank=True, null=True)
+    dim_point = models.FloatField("DİM balı", blank=True, null=True)
+    sector = models.CharField("Bölmə", max_length=2, choices=SECTORS, default="AZ")
+
+    #master
+    language = models.ForeignKey(LanguageModel, verbose_name="Xarici dil", on_delete=models.CASCADE, related_name="language_students")
+
+    #miq
+    specialty = models.CharField("İxtisas", max_length=300)
 
     payment_date = models.DateField("Ödənişin tarixi", blank=True, null=True)
     payment_amount = models.FloatField("Ödəniş məbləği", default=0)
@@ -338,6 +423,7 @@ class AbiturientModel(models.Model):
         ("RU", "Rus dili"),
     )
     student = models.OneToOneField(StudentModel, verbose_name="Tələbə", on_delete=models.CASCADE, related_name="abiturient")
+    teachers = models.ManyToManyField(TeacherModel, verbose_name="Müəllimlər", related_name="teacher_abiturients")
     blocks = models.ManyToManyField(AbiturientBlockModel, verbose_name="Bloklar", related_name="block_abiturients", blank=True, null=True)
     abiturient_class = models.ForeignKey(AbiturientClassModel, verbose_name="Sinif", on_delete=models.CASCADE, related_name="class_abiturients", blank=True, null=True)
     subjects = models.ManyToManyField(AbiturientSubjectModel, verbose_name="Fənnlər", related_name="subject_abiturients", blank=True, null=True)

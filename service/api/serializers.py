@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from service.models import (
-    BranchModel, SeasonModel, StudentModel, TeacherModel,
+    BranchModel, SeasonModel, BlockModel, ClassModel, SubjectModel,
+    GroupModel, LanguageModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
     AbiturientSubjectModel, AbiturientGroupModel, AbiturientModel,
     MasterForeignLanguageModel, MasterSubjectModel, MasterGroupModel,

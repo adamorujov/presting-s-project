@@ -4,6 +4,10 @@ from service.api import views
 urlpatterns = [
     path("branch-list/<email>/", views.BranchListAPIView.as_view(), name="branch-list"),
     path("branch-season-list/<int:id>/", views.BranchSeasonListAPIView.as_view(), name="branch-list"),
+    path("branch-create/", views.BranchCreateAPIView.as_view(), name="branch-create"),
+    path("branch-retrieve-update-delete/<int:id>/", views.BranchRetrieveUpdateDestroyAPIView.as_view(), name="branch-retrieve-update-delete"),
+
+
     path("season-student-list/<int:id>/", views.SeasonStudentListAPIView.as_view(), name="season-student-list"),
     path("season-teacher-list/<int:id>/", views.SeasonTeacherListAPIView.as_view(), name="season-teacher-list"),
     path("accountant-list/", views.AccountantListAPIView.as_view(), name="accountant-list"),
