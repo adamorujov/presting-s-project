@@ -14,7 +14,7 @@ from service.models import (
 )
 from account.models import Account
 from service.api.serializers import (
-    BranchSerializer, SeasonSerializer, BlockSerializer, ClassSerializer, SubjectSerializer,
+    BranchSerializer, SeasonSerializer, SeasonCreateSerializer, BlockSerializer, ClassSerializer, SubjectSerializer,
     GroupSerializer, LanguageSerializer, StudentSerializer, TeacherSerializer,
     AccountantSerializer, AbiturientBlockSerializer, AbiturientClassSerializer,
     AbiturientSubjectSerializer, AbiturientGroupSerializer, AbiturientSerializer,
@@ -78,12 +78,12 @@ class SeasonTeacherListAPIView(ListAPIView):
 
 class SeasonCreateAPIView(CreateAPIView):
     queryset = SeasonModel.objects.all()
-    serializer_class = SeasonSerializer
+    serializer_class = SeasonCreateSerializer
     permission_classes = (IsAdminUser,)
 
 class SeasonRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = SeasonModel.objects.all()
-    serializer_class = SeasonSerializer
+    serializer_class = SeasonCreateSerializer
     permission_classes = (IsAdminUser,)
     lookup_field = "id"
 

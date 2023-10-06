@@ -26,6 +26,11 @@ class SeasonSerializer(serializers.ModelSerializer):
         model = SeasonModel
         fields = "__all__"
 
+class SeasonCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SeasonModel
+        fields = "__all__"
+
 class BlockSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlockModel
