@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from service.models import (
     BranchModel, SeasonModel, BlockModel, ClassModel, SubjectModel,
-    GroupModel, LanguageModel, StudentModel, TeacherModel,
+    GroupModel, LanguageModel, StudentCategoryModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
     AbiturientSubjectModel, AbiturientGroupModel, AbiturientModel,
     MasterForeignLanguageModel, MasterSubjectModel, MasterGroupModel,
@@ -56,6 +56,11 @@ class LanguageSerializer(serializers.ModelSerializer):
         model = LanguageModel
         fields = "__all__"
 
+class StudentCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentCategoryModel
+        fields = "__all__"
+
 class StudentSerializer(serializers.ModelSerializer):
     season = serializers.SlugRelatedField(queryset=SeasonModel.objects.all(), slug_field="name")
 
@@ -63,9 +68,19 @@ class StudentSerializer(serializers.ModelSerializer):
         model = StudentModel
         fields = "__all__"
 
+class StudentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentModel
+        fields = "__all__"
+
 class TeacherSerializer(serializers.ModelSerializer):
     season = serializers.SlugRelatedField(queryset=SeasonModel.objects.all(), slug_field="name")
 
+    class Meta:
+        model = TeacherModel
+        fields = "__all__"
+
+class TeacherCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeacherModel
         fields = "__all__"

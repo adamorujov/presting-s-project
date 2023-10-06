@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from service.models import (
     BranchModel, SeasonModel, BlockModel, ClassModel, SubjectModel,
-    GroupModel, LanguageModel, StudentModel, TeacherModel,
+    GroupModel, LanguageModel, StudentCategoryModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
     AbiturientSubjectModel, AbiturientGroupModel, AbiturientModel,
     MasterForeignLanguageModel, MasterSubjectModel, MasterGroupModel,
@@ -15,7 +15,7 @@ from service.models import (
 from account.models import Account
 from service.api.serializers import (
     BranchSerializer, SeasonSerializer, SeasonCreateSerializer, BlockSerializer, ClassSerializer, SubjectSerializer,
-    GroupSerializer, LanguageSerializer, StudentSerializer, TeacherSerializer,
+    GroupSerializer, LanguageSerializer, StudentCategorySerializer, StudentSerializer, StudentCreateSerializer, TeacherSerializer, TeacherCreateSerializer,
     AccountantSerializer, AbiturientBlockSerializer, AbiturientClassSerializer,
     AbiturientSubjectSerializer, AbiturientGroupSerializer, AbiturientSerializer,
     MasterForeignLanguageSerializer, MasterSubjectSerializer, MasterGroupSerializer,
@@ -69,13 +69,6 @@ class SeasonStudentListAPIView(ListAPIView):
     serializer_class = StudentSerializer
     permission_classes = (IsAdminUser,)
 
-class SeasonTeacherListAPIView(ListAPIView):
-    def get_queryset(self):
-        id = self.kwargs.get("id")
-        return TeacherModel.objects.filter(season_id=id)
-    serializer_class = TeacherSerializer
-    permission_classes = (IsAdminUser,)
-
 class SeasonCreateAPIView(CreateAPIView):
     queryset = SeasonModel.objects.all()
     serializer_class = SeasonCreateSerializer
@@ -84,6 +77,66 @@ class SeasonCreateAPIView(CreateAPIView):
 class SeasonRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = SeasonModel.objects.all()
     serializer_class = SeasonCreateSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class StudentCategoryListCreateAPIView(ListCreateAPIView):
+    queryset = StudentCategoryModel.objects.all()
+    serializer_class = StudentCategorySerializer
+    permission_classes = (IsAdminUser,)
+
+class StudentCategoryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = StudentCategoryModel.objects.all()
+    serializer_class = StudentCategorySerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class SeasonStudentListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        return StudentModel.objects.filter(season_id=id)
+    serializer_class = StudentSerializer
+    permission_classes = (IsAdminUser,)
+
+class CategorySeasonStudentListAPIView(ListAPIView):
+    def get_queryset(self):
+        season_id = self.kwargs.get("season_id")
+        category_id = self.kwargs.get("category_id")
+        category = get_object_or_404(StudentCategoryModel, id=category_id)
+
+        return StudentModel.objects.filter(
+            season_id=id,
+            categoryies=category
+        )
+    serializer_class = StudentSerializer
+    permission_classes = (IsAdminUser,)
+    
+class StudentCreateAPIView(CreateAPIView):
+    queryset = StudentModel.objects.all()
+    serializer_class = StudentCreateSerializer
+    permission_classes = (IsAdminUser,)
+
+class StudentRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = StudentModel.objects.all()
+    serializer_class = StudentCreateSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class SeasonTeacherListAPIView(ListAPIView):
+    def get_queryset(self):
+        id = self.kwargs.get("id")
+        return TeacherModel.objects.filter(season_id=id)
+    serializer_class = TeacherSerializer
+    permission_classes = (IsAdminUser,)
+
+class TeacherCreateAPIView(CreateAPIView):
+    queryset = TeacherModel.objects.all()
+    serializer_class = TeacherCreateSerializer
+    permission_classes = (IsAdminUser,)
+
+class TeacherRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = TeacherModel.objects.all()
+    serializer_class = TeacherCreateSerializer
     permission_classes = (IsAdminUser,)
     lookup_field = "id"
 
