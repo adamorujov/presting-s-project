@@ -1,6 +1,7 @@
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from service.models import (
-    BranchModel, SeasonModel, StudentModel, TeacherModel,
+    BranchModel, SeasonModel, BlockModel, ClassModel, SubjectModel,
+    GroupModel, LanguageModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
     AbiturientSubjectModel, AbiturientGroupModel, AbiturientModel,
     MasterForeignLanguageModel, MasterSubjectModel, MasterGroupModel,
@@ -13,7 +14,8 @@ from service.models import (
 )
 from account.models import Account
 from service.api.serializers import (
-    BranchSerializer, SeasonSerializer, StudentSerializer, TeacherSerializer,
+    BranchSerializer, SeasonSerializer, BlockSerializer, ClassSerializer, SubjectSerializer,
+    GroupSerializer, LanguageSerializer, StudentSerializer, TeacherSerializer,
     AccountantSerializer, AbiturientBlockSerializer, AbiturientClassSerializer,
     AbiturientSubjectSerializer, AbiturientGroupSerializer, AbiturientSerializer,
     MasterForeignLanguageSerializer, MasterSubjectSerializer, MasterGroupSerializer,
@@ -82,6 +84,81 @@ class SeasonCreateAPIView(CreateAPIView):
 class SeasonRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = SeasonModel.objects.all()
     serializer_class = SeasonSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class BlockListCreateAPIView(ListCreateAPIView):
+    queryset = BlockModel.objects.all()
+    serializer_class = BlockSerializer
+    permission_classes = (IsAdminUser,)
+
+class BlockRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = BlockModel.objects.all()
+    serializer_class = BlockSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class ClassListAPIView(ListAPIView):
+    queryset = ClassModel.objects.all()
+    serializer_class = ClassSerializer
+    permission_classes = (IsAdminUser,)
+
+class ClassListCreateAPIView(ListCreateAPIView):
+    queryset = ClassModel.objects.all()
+    serializer_class = ClassSerializer
+    permission_classes = (IsAdminUser,)
+
+class ClassRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = ClassModel.objects.all()
+    serializer_class = ClassSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class SubjectListAPIView(ListAPIView):
+    queryset = SubjectModel.objects.all()
+    serializer_class = SubjectSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectListCreateAPIView(ListCreateAPIView):
+    queryset = SubjectModel.objects.all()
+    serializer_class = SubjectSerializer
+    permission_classes = (IsAdminUser,)
+
+class SubjectRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = SubjectModel.objects.all()
+    serializer_class = SubjectSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class GroupListAPIView(ListAPIView):
+    queryset = GroupModel.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = (IsAdminUser,)
+
+class GroupListCreateAPIView(ListCreateAPIView):
+    queryset = GroupModel.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = (IsAdminUser,)
+
+class GroupRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = GroupModel.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = (IsAdminUser,)
+    lookup_field = "id"
+
+class LanguageListAPIView(ListAPIView):
+    queryset = LanguageModel.objects.all()
+    serializer_class = LanguageSerializer
+    permission_classes = (IsAdminUser,)
+
+class LanguageListCreateAPIView(ListCreateAPIView):
+    queryset = LanguageModel.objects.all()
+    serializer_class = LanguageSerializer
+    permission_classes = (IsAdminUser,)
+
+class LanguageRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = LanguageModel.objects.all()
+    serializer_class = LanguageSerializer
     permission_classes = (IsAdminUser,)
     lookup_field = "id"
 

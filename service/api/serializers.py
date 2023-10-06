@@ -26,6 +26,31 @@ class SeasonSerializer(serializers.ModelSerializer):
         model = SeasonModel
         fields = "__all__"
 
+class BlockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlockModel
+        fields = "__all__"
+
+class ClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClassModel
+        fields = "__all__"
+
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubjectModel
+        fields = "__all__"
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupModel
+        fields = "__all__"
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LanguageModel
+        fields = "__all__"
+
 class StudentSerializer(serializers.ModelSerializer):
     season = serializers.SlugRelatedField(queryset=SeasonModel.objects.all(), slug_field="name")
 

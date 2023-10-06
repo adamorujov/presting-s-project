@@ -14,6 +14,21 @@ urlpatterns = [
 
     path("accountant-list/", views.AccountantListAPIView.as_view(), name="accountant-list"),
 
+    path("block-list-create/", views.BlockListCreateAPIView.as_view(), name="block-list-create"),
+    path("block-retrieve-update-delete/<int:id>/", views.BlockRetrieveUpdateDestroyAPIView.as_view(), name="block-retrieve-update-delete"),
+
+    path("class-list-create/", views.ClassListCreateAPIView.as_view(), name="class-list-create"),
+    path("class-retrieve-update-delete/<int:id>/", views.ClassRetrieveUpdateDestroyAPIView.as_view(), name="class-retrieve-update-delete"),
+
+    path("subject-list-create/", views.SubjectListCreateAPIView.as_view(), name="subject-list-create"),
+    path("subject-retrieve-update-delete/<int:id>/", views.SubjectRetrieveUpdateDestroyAPIView.as_view(), name="subject-retrieve-update-delete"),
+
+    path("group-list-create/", views.GroupListCreateAPIView.as_view(), name="group-list-create"),
+    path("group-retrieve-update-delete/<int:id>/", views.GroupRetrieveUpdateDestroyAPIView.as_view(), name="group-retrieve-update-delete"),
+
+    path("language-list-create/", views.LanguageListCreateAPIView.as_view(), name="language-list-create"),
+    path("language-retrieve-update-delete/<int:id>/", views.LanguageRetrieveUpdateDestroyAPIView.as_view(), name="language-retrieve-update-delete"),
+
     path("abiturient-block-list/", views.AbiturientBlockListAPIView.as_view(), name="abiturient-block-list"),
     path("block-abiturient-list/<int:id>/", views.BlockAbiturientListAPIView.as_view(), name="block-abiturient-list"),
     path("abiturient-class-list/", views.AbiturientClassListAPIView.as_view(), name="abiturient-class-list"),
