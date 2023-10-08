@@ -144,7 +144,7 @@ class StudentModel(models.Model):
 
     # kateqoriya saheleri
     # abituriyent
-    teachers = models.ManyToManyField('TeacherModel', verbose_name="Müəllimlər", related_name="teacher_students")
+    teachers = models.ManyToManyField('TeacherModel', verbose_name="Müəllimlər", blank=True, null=True, related_name="teacher_students")
     blocks = models.ManyToManyField(BlockModel, verbose_name="Bloklar", related_name="block_students", blank=True, null=True)
     abiturient_class = models.ForeignKey(ClassModel, verbose_name="Sinif", on_delete=models.CASCADE, related_name="class_students", blank=True, null=True)
     subjects = models.ManyToManyField(SubjectModel, verbose_name="Fənnlər", related_name="subject_students", blank=True, null=True)
@@ -153,10 +153,10 @@ class StudentModel(models.Model):
     sector = models.CharField("Bölmə", max_length=2, choices=SECTORS, default="AZ")
 
     #master
-    language = models.ForeignKey(LanguageModel, verbose_name="Xarici dil", on_delete=models.CASCADE, related_name="language_students")
+    language = models.ForeignKey(LanguageModel, verbose_name="Xarici dil", blank=True, null=True, on_delete=models.CASCADE, related_name="language_students")
 
     #miq
-    specialty = models.CharField("İxtisas", max_length=300)
+    specialty = models.CharField("İxtisas", max_length=300, blank=True, null=True)
 
     payment_date = models.DateField("Ödənişin tarixi", blank=True, null=True)
     payment_amount = models.FloatField("Ödəniş məbləği", default=0)
