@@ -28,10 +28,20 @@ class TeacherPaymentInformationSerializer(serializers.ModelSerializer):
         model = TeacherPaymentInformationModel
         fields = "__all__"
 
+class TeacherPaymentInformationUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TeacherPaymentInformationModel
+        fields = "__all__"
+
 class StudentPaymentInformationSerializer(serializers.ModelSerializer):
     student = StudentSerializer()
     month = MonthSerializer()
 
+    class Meta:
+        model = StudentPaymentInformationModel
+        fields = "__all__"
+
+class StudentPaymentInformationUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentPaymentInformationModel
         fields = "__all__"

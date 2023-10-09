@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from accounting.models import (
     MonthModel, TeacherPaymentInformationModel, StudentPaymentInformationModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
     MIQPaymentInformationModel, CivilServicePaymentInformationModel, ForeignLanguagePaymentInformationModel,
@@ -8,7 +8,9 @@ from accounting.models import (
 )
 
 from accounting.api.serializers import (
-    MonthSerializer, TeacherPaymentInformationSerializer, StudentPaymentInformationSerializer, AbiturientPaymentInformationSerializer, MasterPaymentInformationSerializer,
+    MonthSerializer, TeacherPaymentInformationSerializer, TeacherPaymentInformationUpdateSerializer, 
+    StudentPaymentInformationSerializer, StudentPaymentInformationUpdateSerializer,
+    AbiturientPaymentInformationSerializer, MasterPaymentInformationSerializer,
     MIQPaymentInformationSerializer, ForeignLanguagePaymentInformationSerializer, 
     ComputerCoursePaymentInformationSerializer, CivilServicePaymentInformationSerializer,
     AccountingPaymentInformationSerializer, HighSchoolPaymentInformationSerializer,
@@ -32,7 +34,7 @@ class TeacherMonthPaymentInformationListAPIView(ListAPIView):
             month_id=month_id
         )
     serializer_class = TeacherPaymentInformationSerializer
-    permission_classes = (IsAdminUser,) 
+    permission_classes = (IsAdminUser,)
 
 class MonthTeacherPaymentInformationListAPIView(ListAPIView):
     def get_queryset(self):
@@ -42,6 +44,12 @@ class MonthTeacherPaymentInformationListAPIView(ListAPIView):
         )
     serializer_class = TeacherPaymentInformationSerializer
     permission_classes = (IsAdminUser,) 
+
+class TeacherPaymentInformationRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    queryset = TeacherPaymentInformationModel.objects.all()
+    serializer_class = TeacherPaymentInformationUpdateSerializer
+    permission_classes = (IsAdminUser,) 
+    lookup_field = "id"
 
 class StudentMonthPaymentInformationListAPIView(ListAPIView):
     def get_queryset(self):
@@ -61,6 +69,11 @@ class MonthStudentPaymentInformationListAPIView(ListAPIView):
     serializer_class = StudentPaymentInformationSerializer
     permission_classes = (IsAdminUser,)
 
+class StudentPaymentInformationRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    queryset = StudentPaymentInformationModel.objects.all()
+    serializer_class = StudentPaymentInformationUpdateSerializer
+    permission_classes = (IsAdminUser,) 
+    lookup_field = "id"
 
 class AbiturientMonthPaymentInformationListAPIView(ListAPIView):
     def get_queryset(self):
