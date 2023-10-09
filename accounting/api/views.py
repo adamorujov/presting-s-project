@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView
 from accounting.models import (
-    MonthModel, TeacherPaymentInformationModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
+    MonthModel, TeacherPaymentInformationModel, StudentPaymentInformationModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
     MIQPaymentInformationModel, CivilServicePaymentInformationModel, ForeignLanguagePaymentInformationModel,
     ComputerCoursePaymentInformationModel, AccountingPaymentInformationModel,
     HighSchoolPaymentInformationModel, PreSchoolPaymentInformationModel,
@@ -8,7 +8,7 @@ from accounting.models import (
 )
 
 from accounting.api.serializers import (
-    MonthSerializer, TeacherPaymentInformationSerializer, AbiturientPaymentInformationSerializer, MasterPaymentInformationSerializer,
+    MonthSerializer, TeacherPaymentInformationSerializer, StudentPaymentInformationSerializer, AbiturientPaymentInformationSerializer, MasterPaymentInformationSerializer,
     MIQPaymentInformationSerializer, ForeignLanguagePaymentInformationSerializer, 
     ComputerCoursePaymentInformationSerializer, CivilServicePaymentInformationSerializer,
     AccountingPaymentInformationSerializer, HighSchoolPaymentInformationSerializer,
@@ -42,6 +42,24 @@ class MonthTeacherPaymentInformationListAPIView(ListAPIView):
         )
     serializer_class = TeacherPaymentInformationSerializer
     permission_classes = (IsAdminUser,) 
+
+class StudentMonthPaymentInformationListAPIView(ListAPIView):
+    def get_queryset(self):
+        month_id = self.kwargs["id"]
+        return StudentPaymentInformationModel.objects.filter(
+            month_id=month_id
+        )
+    serializer_class = StudentPaymentInformationSerializer
+    permission_classes = (IsAdminUser,) 
+
+class MonthStudentPaymentInformationListAPIView(ListAPIView):
+    def get_queryset(self):
+        student_id = self.kwargs["id"]
+        return StudentPaymentInformationModel.objects.filter(
+            student_id=student_id
+        )
+    serializer_class = StudentPaymentInformationSerializer
+    permission_classes = (IsAdminUser,)
 
 
 class AbiturientMonthPaymentInformationListAPIView(ListAPIView):
