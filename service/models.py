@@ -170,7 +170,38 @@ class StudentModel(models.Model):
         return self.first_name + " " + self.last_name
     
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id and self.payment_date:
+            mon = 8
+            year = self.payment_date.year
+            months = accounting.models.MonthModel.objects.filter(
+                season = self.season
+            )
+            for month in months: 
+                day = self.payment_date.day
+                mon = mon + 1
+                if mon == 13:
+                    mon = 1
+                    year = year + 1
+                elif mon in (4, 6, 9, 11) and day == 31:
+                    day = 30
+                elif mon == 2 and day > 28:
+                    day = 28
+                if not accounting.models.StudentPaymentInformationModel.objects.filter(
+                    student = self,
+                    month = month
+                ).exists():
+                    accounting.models.StudentPaymentInformationModel.objects.create(
+                        student = self,
+                        month = month,
+                        payment_date = date(year, mon, day),
+                        payment_amount = self.payment_amount
+                    )
+                else:
+                    paymentinfo = accounting.models.StudentPaymentInformationModel.objects.get(student=self, month=month)
+                    paymentinfo.payment_date = date(year, mon, day)
+                    paymentinfo.payment_amount = self.payment_amount
+                    paymentinfo.save()
+        elif self.id:
             NotificationModel.objects.create(
                 content = self.season.branch.name + " filialında bir tələbənin məlumatları yeniləndi: " + self.get_full_name,
                 type = "U"
@@ -180,7 +211,22 @@ class StudentModel(models.Model):
                 content = self.season.branch.name + " filialına bir tələbə əlavə olundu: " + self.get_full_name,
                 type = "A"
             )
+
         return super(StudentModel, self).save(*args, **kwargs)
+ 
+    
+    # def save(self, *args, **kwargs):
+    #     if self.id:
+    #         NotificationModel.objects.create(
+    #             content = self.season.branch.name + " filialında bir tələbənin məlumatları yeniləndi: " + self.get_full_name,
+    #             type = "U"
+    #         )
+    #     else:
+    #         NotificationModel.objects.create(
+    #             content = self.season.branch.name + " filialına bir tələbə əlavə olundu: " + self.get_full_name,
+    #             type = "A"
+    #         )
+    #     return super(StudentModel, self).save(*args, **kwargs)
     
     def delete(self, *args, **kwargs):
         NotificationModel.objects.create(

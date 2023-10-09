@@ -1,10 +1,8 @@
-from tkinter.messagebox import QUESTION
-from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from accounting.models import (
-    MonthModel, TeacherPaymentInformationModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
+    MonthModel, TeacherPaymentInformationModel, StudentPaymentInformationModel, AbiturientPaymentInformationModel, MasterPaymentInformationModel,
     MIQPaymentInformationModel, CivilServicePaymentInformationModel, ForeignLanguagePaymentInformationModel,
     ComputerCoursePaymentInformationModel, AccountingPaymentInformationModel,
     HighSchoolPaymentInformationModel, PreSchoolPaymentInformationModel,
@@ -18,7 +16,7 @@ from django.http import HttpResponse
 class MonthAdmin(admin.ModelAdmin):
     list_display = ("__str__", "season")
     
-
+admin.site.register(StudentPaymentInformationModel)
 @admin.register(TeacherPaymentInformationModel)
 class TeacherPaymentInformationAdmin(admin.ModelAdmin):
     list_display = ("teacher", "month", "payment_date", "payment_amount", "status")

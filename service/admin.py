@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from service.models import (
-    BranchModel, SeasonModel, StudentModel, TeacherModel,
+    BranchModel, SeasonModel, StudentCategoryModel, StudentModel, TeacherModel,
     AccountantModel, AbiturientBlockModel, AbiturientClassModel,
     AbiturientSubjectModel, AbiturientGroupModel, AbiturientModel,
     MasterForeignLanguageModel, MasterSubjectModel, MasterGroupModel,
@@ -51,6 +51,7 @@ class SeasonAdmin(admin.ModelAdmin):
             return super().formfield_for_foreignkey(db_field, request, **kwargs)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+admin.site.register(StudentCategoryModel)
 @admin.register(StudentModel)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ("__str__", "season", "status")

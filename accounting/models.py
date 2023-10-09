@@ -1,6 +1,6 @@
 from django.db import models
 from service.models import (
-    SeasonModel, TeacherModel, AbiturientModel, MasterModel, MIQModel,
+    SeasonModel, TeacherModel, StudentModel, AbiturientModel, MasterModel, MIQModel,
     CivilServiceModel, ForeignLanguageModel, ComputerCourseModel,
     AccountingModel, HighSchoolModel, PreSchoolModel, PrimarySchoolModel
 )
@@ -44,8 +44,35 @@ class TeacherPaymentInformationModel(models.Model):
 
     def __str__(self):
         return self.teacher.first_name + " " + self.teacher.last_name
-    
 
+class StudentPaymentInformationModel(models.Model):
+    student = models.ForeignKey(StudentModel, verbose_name="Tələbə", on_delete=models.CASCADE, related_name="stduent_payments")
+    month = models.ForeignKey(MonthModel, verbose_name="Ay", on_delete=models.CASCADE, related_name="month_payments")
+    payment_date = models.DateField("Ödənişin tarixi", blank=True, null=True)
+    payment_amount = models.FloatField("Ödəniş məbləği", default=0)
+    status = models.BooleanField("Ödənişin statusu", default=False)
+
+    class Meta:
+        verbose_name = "Tələbə ödəniş məlumatı"
+        verbose_name_plural = "Tələbə ödəniş məlumatları"
+
+    def save(self, *args, **kwargs):
+        if not self.id and StudentPaymentInformationModel.objects.filter(
+            student = self.student,
+            month = self.month
+        ).exists():
+            pass
+        else:
+            if self.id and self.status:
+                NotificationModel.objects.create(
+                    content = "Tələbə: " + self.student.get_full_name + " ödəniş olundu.",
+                    type = "A"
+                )
+            return super(StudentPaymentInformationModel, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.student.first_name + " " + self.student.last_name
+     
 class AbiturientPaymentInformationModel(models.Model):
     abiturient = models.ForeignKey(AbiturientModel, verbose_name="Abituriyent", on_delete=models.CASCADE, related_name="abiturient_payments")
     month = models.ForeignKey(MonthModel, verbose_name="Ay", on_delete=models.CASCADE, related_name="a_month_payments")
