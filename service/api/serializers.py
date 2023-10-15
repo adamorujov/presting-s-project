@@ -53,18 +53,6 @@ class StudentCategorySerializer(serializers.ModelSerializer):
         model = StudentCategoryModel
         fields = "__all__"
 
-class StudentSerializer(serializers.ModelSerializer):
-    season = serializers.SlugRelatedField(queryset=SeasonModel.objects.all(), slug_field="name")
-
-    class Meta:
-        model = StudentModel
-        fields = "__all__"
-
-class StudentCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StudentModel
-        fields = "__all__"
-
 class TeacherSerializer(serializers.ModelSerializer):
     season = serializers.SlugRelatedField(queryset=SeasonModel.objects.all(), slug_field="name")
 
@@ -75,6 +63,27 @@ class TeacherSerializer(serializers.ModelSerializer):
 class TeacherCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeacherModel
+        fields = "__all__"
+
+class StudentSerializer(serializers.ModelSerializer):
+    season = serializers.SlugRelatedField(queryset=SeasonModel.objects.all(), slug_field="name")
+    categories = StudentCategorySerializer(many=True)
+    teachers = TeacherSerializer(many=True)
+    blocks = BlockSerializer(many=True)
+    subjects = SubjectSerializer(many=True)
+
+    class Meta:
+        model = StudentModel
+        fields = "__all__"
+
+class StudentCreateSerializer(serializers.ModelSerializer):
+    season = serializers.SlugRelatedField(queryset=SeasonModel.objects.all(), slug_field="name")
+    categories = serializers.SlugRelatedField(queryset=StudentCategoryModel.objects.all(), many=True, slug_field="name")
+    teachers = serializers.SlugRelatedField(queryset=TeacherModel.objects.all(), many=True, slug_field="first_name")
+    blocks = serializers.SlugRelatedField(queryset=BlockModel.objects.all(), many=True, slug_field="name")
+    subjects = serializers.SlugRelatedField(queryset=SubjectModel.objects.all(), many=True, slug_field="name")
+    class Meta:
+        model = StudentModel
         fields = "__all__"
 
 class AccountantSerializer(serializers.ModelSerializer):
