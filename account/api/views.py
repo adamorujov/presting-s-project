@@ -12,4 +12,5 @@ class AccountRetrieveAPIView(RetrieveAPIView):
 class AccountCreateAPIView(CreateAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountCreateSerializer
+
     

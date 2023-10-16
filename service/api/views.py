@@ -81,8 +81,8 @@ class CategorySeasonStudentListAPIView(ListAPIView):
         category = get_object_or_404(StudentCategoryModel, id=category_id)
 
         return StudentModel.objects.filter(
-            season_id=id,
-            categoryies=category
+            season_id=season_id,
+            categories=category
         )
     serializer_class = StudentSerializer
     permission_classes = (IsAdminUser,)
