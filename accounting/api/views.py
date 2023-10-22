@@ -47,6 +47,15 @@ class TeacherPaymentInformationRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 class StudentMonthPaymentInformationListAPIView(ListAPIView):
     def get_queryset(self):
         month_id = self.kwargs.get("month_id")
+        return StudentPaymentInformationModel.objects.filter(
+            month_id=month_id
+        )
+    serializer_class = StudentPaymentInformationSerializer
+    permission_classes = (IsAdminUser,) 
+
+class StudentCategoryMonthPaymentInformationListAPIView(ListAPIView):
+    def get_queryset(self):
+        month_id = self.kwargs.get("month_id")
         category_id = self.kwargs.get("category_id")
         category = get_object_or_404(StudentCategoryModel, id=category_id)
         return StudentPaymentInformationModel.objects.filter(
