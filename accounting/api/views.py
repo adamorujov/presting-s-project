@@ -2,12 +2,14 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from accounting.models import (
     MonthModel, TeacherPaymentInformationModel, StudentPaymentInformationModel
 )
+from service.models import StudentCategoryModel
 
 from accounting.api.serializers import (
     MonthSerializer, TeacherPaymentInformationSerializer, TeacherPaymentInformationUpdateSerializer, 
     StudentPaymentInformationSerializer, StudentPaymentInformationUpdateSerializer
 )
 from rest_framework.permissions import IsAdminUser
+from django.shortcuts import get_object_or_404
 
 class SeasonMonthListAPIView(ListAPIView):
     def get_queryset(self):
@@ -44,8 +46,11 @@ class TeacherPaymentInformationRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
 class StudentMonthPaymentInformationListAPIView(ListAPIView):
     def get_queryset(self):
-        month_id = self.kwargs["id"]
+        month_id = self.kwargs.get("month_id")
+        category_id = self.kwargs.get("category_id")
+        category = get_object_or_404(StudentCategoryModel, id=category_id)
         return StudentPaymentInformationModel.objects.filter(
+            student__categories=category,
             month_id=month_id
         )
     serializer_class = StudentPaymentInformationSerializer
