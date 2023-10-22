@@ -16,11 +16,17 @@ class MonthModel(models.Model):
         return self.name
 
 class TeacherPaymentInformationModel(models.Model):
+    PAYMENT_TYPES = (
+        ("N", "Nağd"),
+        ("HK", "Hesaba köçürmə")
+    )
     teacher = models.ForeignKey(TeacherModel, verbose_name="Müəllim", on_delete=models.CASCADE, related_name="teacher_payments")
     month = models.ForeignKey(MonthModel, verbose_name="Ay", on_delete=models.CASCADE, related_name="t_month_payments")
     payment_date = models.DateField("Ödənişin tarixi", blank=True, null=True)
     payment_amount = models.FloatField("Ödəniş məbləği", default=0)
+    payment_type = models.CharField("Ödənişin növü", max_length=2, choices=PAYMENT_TYPES, default="N")
     status = models.BooleanField("Ödənişin statusu", default=False)
+    
 
     class Meta:
         verbose_name = "Müəllim ödəniş məlumatı"
@@ -44,10 +50,15 @@ class TeacherPaymentInformationModel(models.Model):
         return self.teacher.first_name + " " + self.teacher.last_name
 
 class StudentPaymentInformationModel(models.Model):
+    PAYMENT_TYPES = (
+        ("N", "Nağd"),
+        ("HK", "Hesaba köçürmə")
+    )
     student = models.ForeignKey(StudentModel, verbose_name="Tələbə", on_delete=models.CASCADE, related_name="stduent_payments")
     month = models.ForeignKey(MonthModel, verbose_name="Ay", on_delete=models.CASCADE, related_name="month_payments")
     payment_date = models.DateField("Ödənişin tarixi", blank=True, null=True)
     payment_amount = models.FloatField("Ödəniş məbləği", default=0)
+    payment_type = models.CharField("Ödənişin növü", max_length=2, choices=PAYMENT_TYPES, default="N")
     status = models.BooleanField("Ödənişin statusu", default=False)
 
     class Meta:
